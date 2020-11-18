@@ -13,11 +13,15 @@
     <![endif]-->
     <link rel="stylesheet" href="/static/css/public.css?v={$version}" media="all">
     <script>
+        var action = "{{ .action }}"
+        var autoloadjs = {{ .controller | jsExists }}
+        var jspath = "js/{{.controller}}.js"
+
         window.CONFIG = {
-            CONTROLLER_JS_PATH: "js/log.js",
-            ACTION: "index",
-            AUTOLOAD_JS: "/static/js/log.js",
-            IS_SUPER_ADMIN: "false",
+            CONTROLLER_JS_PATH: jspath,
+            ACTION: action,
+            AUTOLOAD_JS: autoloadjs,
+            IS_SUPER_ADMIN: false,
             VERSION: "1.0.0",
         };
     </script>
