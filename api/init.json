@@ -1,0 +1,80 @@
+{
+    "logoInfo": {
+        "title": "EasyAdmin",
+        "image": "/favicon.ico",
+        "href": "/index/index.html"
+    },
+    "homeInfo": {
+        "title": "后台首页",
+        "icon": "fa fa-home",
+        "href": "/index/welcome.html"
+    },
+    "menuInfo": [
+        {
+            "id": 228,
+            "pid": 0,
+            "title": "系统管理",
+            "icon": "fa fa-cog",
+            "href": "",
+            "target": "_self",
+            "child": [
+                {
+                    "id": 244,
+                    "pid": 228,
+                    "title": "管理员管理",
+                    "icon": "fa fa-user",
+                    "href": "/admin/index.html",
+                    "target": "_self"
+                },
+                {
+                    "id": 245,
+                    "pid": 228,
+                    "title": "角色管理",
+                    "icon": "fa fa-bitbucket-square",
+                    "href": "/auth/index.html",
+                    "target": "_self"
+                },
+                {
+                    "id": 234,
+                    "pid": 228,
+                    "title": "菜单管理",
+                    "icon": "fa fa-tree",
+                    "href": "/menu/index.html",
+                    "target": "_self"
+                },
+                {
+                    "id": 246,
+                    "pid": 228,
+                    "title": "节点管理",
+                    "icon": "fa fa-list",
+                    "href": "/node/index.html",
+                    "target": "_self"
+                },
+                {
+                    "id": 247,
+                    "pid": 228,
+                    "title": "配置管理",
+                    "icon": "fa fa-asterisk",
+                    "href": "/config/index.html",
+                    "target": "_self"
+                },
+                {
+                    "id": 248,
+                    "pid": 228,
+                    "title": "上传管理",
+                    "icon": "fa fa-arrow-up",
+                    "href": "/uploadfile/index.html",
+                    "target": "_self"
+                },
+                {
+                    "id": 252,
+                    "pid": 228,
+                    "title": "快捷入口",
+                    "icon": "fa fa-list",
+                    "href": "/quick/index.html",
+                    "target": "_self"
+                }
+            ]
+        }
+    ]
+}
