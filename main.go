@@ -28,6 +28,9 @@ func main() {
 	g.GET("/index/welcome.html", func(c *gin.Context) {
 	    c.HTML(200, "index/welcome.html", gin.H{})
 	})
+	g.GET("/log/index.html", func(c *gin.Context) {
+	    c.HTML(200, "log/index.html", gin.H{})
+	})
 
 	g.Run(":8090")
 }

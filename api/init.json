@@ -73,6 +73,14 @@
                     "icon": "fa fa-list",
                     "href": "/quick/index.html",
                     "target": "_self"
+                },
+                {
+                    "id": 253,
+                    "pid": 228,
+                    "title": "日志",
+                    "icon": "fa fa-list",
+                    "href": "/log/index.html",
+                    "target": "_self"
                 }
             ]
         }

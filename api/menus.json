@@ -228,7 +228,7 @@
       "authorityId": 18,
       "authorityName": "登录日志",
       "orderNumber": 18,
-      "menuUrl": "system/loginRecord",
+      "menuUrl": "log/index",
       "menuIcon": null,
       "createTime": "2018/06/29 11:05:41",
       "authority": null,
