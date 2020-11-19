@@ -81,6 +81,14 @@
                     "icon": "fa fa-list",
                     "href": "/log/index.html",
                     "target": "_self"
+                },
+                {
+                    "id": 254,
+                    "pid": 228,
+                    "title": "任务",
+                    "icon": "fa fa-list",
+                    "href": "/task/index.html",
+                    "target": "_self"
                 }
             ]
         }

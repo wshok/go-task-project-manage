@@ -1,7 +1,7 @@
 {
   "code": 0,
   "msg": "",
-  "count": 19,
+  "count": 30,
   "data": [
     {
       "authorityId": 1,
@@ -226,7 +226,7 @@
     },
     {
       "authorityId": 18,
-      "authorityName": "登录日志",
+      "authorityName": "日志",
       "orderNumber": 18,
       "menuUrl": "log/index",
       "menuIcon": null,
@@ -234,21 +234,47 @@
       "authority": null,
       "checked": 0,
       "updateTime": "2018/06/29 11:05:41",
-      "isMenu": 0,
+      "isMenu": 1,
       "parentId": 1
     },
     {
       "authorityId": 19,
-      "authorityName": "查询登录日志",
+      "authorityName": "任务",
       "orderNumber": 19,
-      "menuUrl": "",
+      "menuUrl": "task/index",
       "menuIcon": "",
       "createTime": "2018/07/21 13:56:43",
-      "authority": "loginRecord:view",
+      "authority": null,
       "checked": 0,
       "updateTime": "2018/07/21 13:56:43",
       "isMenu": 1,
-      "parentId": 18
+      "parentId": 1
+    },
+    {
+      "authorityId": 20,
+      "authorityName": "任务添加",
+      "orderNumber": 20,
+      "menuUrl": "",
+      "menuIcon": "",
+      "createTime": "2018/07/21 13:56:43",
+      "authority": "task:add",
+      "checked": 0,
+      "updateTime": "2018/07/21 13:56:43",
+      "isMenu": 0,
+      "parentId": 19
+    },
+    {
+      "authorityId": 21,
+      "authorityName": "任务编辑",
+      "orderNumber": 21,
+      "menuUrl": "",
+      "menuIcon": "",
+      "createTime": "2018/07/21 13:56:43",
+      "authority": "task:edit",
+      "checked": 0,
+      "updateTime": "2018/07/21 13:56:43",
+      "isMenu": 0,
+      "parentId": 19
     }
   ]
 }

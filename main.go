@@ -43,6 +43,12 @@ func main() {
 			"action": "index",
 	    })
 	})
+	g.GET("/task/index.html", func(c *gin.Context) {
+	    c.HTML(200, "task/index.html", gin.H{
+	    	"controller": "task",
+			"action": "index",
+	    })
+	})
 
 	g.Run(":8090")
 }
