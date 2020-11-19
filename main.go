@@ -38,11 +38,28 @@ func main() {
 	    })
 	})
 
+	admin := g.Group("/admin")
+	{
+		admin.GET("/index.html", func(c *gin.Context) {
+		    c.HTML(200, "admin/index.html", gin.H{
+		    	"controller": "admin",
+				"action": "index",
+		    })
+		})
+	}
+
+	auth := g.Group("/auth")
+	{
+		auth.GET("/index.html", func(c *gin.Context) {
+		    c.HTML(200, "auth/index.html", gin.H{
+		    	"controller": "auth",
+				"action": "index",
+		    })
+		})
+	}
+
 	task := g.Group("/task")
 	{
-		// v1.POST("/login", loginEndpoint)
-		// v1.POST("/submit", submitEndpoint)
-		// v1.POST("/read", readEndpoint)
 		task.GET("/index.html", func(c *gin.Context) {
 		    c.HTML(200, "task/index.html", gin.H{
 		    	"controller": "task",
@@ -55,7 +72,6 @@ func main() {
 				"action": "add",
 		    })
 		})
-
 	}
 
 	g.Run(":8090")
