@@ -5,7 +5,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
         table_elem: '#currentTable',
         table_render_id: 'currentTableRenderId',
         index_url: 'api/task.json',
-        add_url: 'api/task-add.json',
+        add_url: 'task/add.html',
         edit_url: 'api/task-edit.json',
         delete_url: 'api/task-delete.json',
     };
@@ -14,6 +14,18 @@ define(["jquery", "easy-admin"], function ($, ea) {
         index: function () {
             ea.table.render({
                 init: init,
+                // toolbar: [
+                //     [{
+                //         text: '添加',
+                //         url: init.add_url,
+                //         method: 'open',
+                //         auth: 'add',
+                //         class: 'layui-btn layui-btn-normal layui-btn-sm',
+                //         icon: 'fa fa-plus ',
+                //         extend: 'data-full="true"',
+                //     }],
+                //     'delete'
+                // ],
                 cols: [[
                     {type: "checkbox", width: 50},
                     {field: 'id', width: 80, title: 'ID', sort: true},
