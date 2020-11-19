@@ -52,11 +52,11 @@ define(["jquery", "easy-admin", "echarts", "echarts-theme", "miniAdmin", "miniTa
                     moveType: 1,
                     content: html,
                     success: function (layero) {
-                        var btn = layero.find('.layui-layer-btn');
-                        btn.find('.layui-layer-btn0').attr({
-                            href: 'https://gitee.com/zhongshaofa/layuimini',
-                            target: '_blank'
-                        });
+                        // var btn = layero.find('.layui-layer-btn');
+                        // btn.find('.layui-layer-btn0').attr({
+                        //     href: 'https://gitee.com/zhongshaofa/layuimini',
+                        //     target: '_blank'
+                        // });
                     }
                 });
             });

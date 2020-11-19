@@ -37,12 +37,6 @@ func main() {
 			"action": "welcome",
 	    })
 	})
-	g.GET("/log/index.html", func(c *gin.Context) {
-	    c.HTML(200, "log/index.html", gin.H{
-	    	"controller": "log",
-			"action": "index",
-	    })
-	})
 
 	task := g.Group("/task")
 	{

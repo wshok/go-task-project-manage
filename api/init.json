@@ -1,6 +1,6 @@
 {
     "logoInfo": {
-        "title": "EasyAdmin",
+        "title": "",
         "image": "/favicon.ico",
         "href": "/index/index.html"
     },
@@ -21,7 +21,7 @@
                 {
                     "id": 244,
                     "pid": 228,
-                    "title": "管理员管理",
+                    "title": "用户管理",
                     "icon": "fa fa-user",
                     "href": "/admin/index.html",
                     "target": "_self"
@@ -35,57 +35,9 @@
                     "target": "_self"
                 },
                 {
-                    "id": 234,
-                    "pid": 228,
-                    "title": "菜单管理",
-                    "icon": "fa fa-tree",
-                    "href": "/menu/index.html",
-                    "target": "_self"
-                },
-                {
-                    "id": 246,
-                    "pid": 228,
-                    "title": "节点管理",
-                    "icon": "fa fa-list",
-                    "href": "/node/index.html",
-                    "target": "_self"
-                },
-                {
-                    "id": 247,
-                    "pid": 228,
-                    "title": "配置管理",
-                    "icon": "fa fa-asterisk",
-                    "href": "/config/index.html",
-                    "target": "_self"
-                },
-                {
-                    "id": 248,
-                    "pid": 228,
-                    "title": "上传管理",
-                    "icon": "fa fa-arrow-up",
-                    "href": "/uploadfile/index.html",
-                    "target": "_self"
-                },
-                {
-                    "id": 252,
-                    "pid": 228,
-                    "title": "快捷入口",
-                    "icon": "fa fa-list",
-                    "href": "/quick/index.html",
-                    "target": "_self"
-                },
-                {
-                    "id": 253,
-                    "pid": 228,
-                    "title": "日志",
-                    "icon": "fa fa-list",
-                    "href": "/log/index.html",
-                    "target": "_self"
-                },
-                {
                     "id": 254,
                     "pid": 228,
-                    "title": "任务",
+                    "title": "任务管理",
                     "icon": "fa fa-list",
                     "href": "/task/index.html",
                     "target": "_self"
