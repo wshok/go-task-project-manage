@@ -45,13 +45,21 @@ define(["jquery"], function ($) {
             options.isIframe = options.isIframe || false;
             options.maxTabNum = options.maxTabNum || 20;
             if ($(".layuimini-tab .layui-tab-title li").length >= options.maxTabNum) {
-                layer.msg('Tab窗口已达到限定数量，请先关闭部分Tab');
-                return false;
+                // layer.msg('Tab窗口已达到限定数量，请先关闭部分Tab');
+                // return false;
+
+                var loading = layer.load(0, {shade: false, time: 2 * 1000});
+                var $parent = $(".layuimini-tab .layui-tab-title li").eq(0);
+                var tabId = $parent.attr('lay-id');
+                if (tabId !== undefined || tabId !== null) {
+                    miniTab.delete(tabId);
+                }
+                layer.close(loading);
             }
             var ele = element;
             if (options.isIframe) ele = parent.layui.element;
             ele.tabAdd('layuiminiTab', {
-                title: '<span class="layuimini-tab-active"></span><span>' + options.title + '</span><i class="layui-icon layui-unselect layui-tab-close">ဆ</i>' //用于演示
+                title: '<span class="layuimini-tab-active"></span><span>' + options.title + '</span>'
                 , content: '<iframe width="100%" height="100%" frameborder="no" border="0" marginwidth="0" marginheight="0"   src="' + options.href + '"></iframe>'
                 , id: options.tabId
             });
@@ -315,13 +323,13 @@ define(["jquery"], function ($) {
             /**
              * 注册鼠标右键
              */
-            $('body').on('mousedown', '.layuimini-tab .layui-tab-title li', function (e) {
-                var left = $(this).offset().left - $('.layuimini-tab ').offset().left + ($(this).width() / 2),
-                    tabId = $(this).attr('lay-id');
-                if (e.which === 3) {
-                    miniTab.openTabRignMenu(tabId, left);
-                }
-            });
+            // $('body').on('mousedown', '.layuimini-tab .layui-tab-title li', function (e) {
+            //     var left = $(this).offset().left - $('.layuimini-tab ').offset().left + ($(this).width() / 2),
+            //         tabId = $(this).attr('lay-id');
+            //     if (e.which === 3) {
+            //         miniTab.openTabRignMenu(tabId, left);
+            //     }
+            // });
 
             /**
              * 关闭tab右键菜单
