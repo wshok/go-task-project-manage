@@ -38,11 +38,11 @@ func main() {
 	    })
 	})
 
-	admin := g.Group("/admin")
+	user := g.Group("/user")
 	{
-		admin.GET("/index.html", func(c *gin.Context) {
-		    c.HTML(200, "admin/index.html", gin.H{
-		    	"controller": "admin",
+		user.GET("/index.html", func(c *gin.Context) {
+		    c.HTML(200, "user/index.html", gin.H{
+		    	"controller": "user",
 				"action": "index",
 		    })
 		})

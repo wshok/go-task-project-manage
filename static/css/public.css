@@ -533,3 +533,7 @@ table样式
     border-bottom: 1px solid gainsboro;
     border-left: 5px solid #FF5722;
 }
+
+.drag .layui-elem-quote {
+    cursor: grab;
+}
