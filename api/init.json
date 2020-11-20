@@ -23,7 +23,7 @@
                     "pid": 1,
                     "title": "用户管理",
                     "icon": "fa fa-user",
-                    "href": "/admin/index.html",
+                    "href": "/user/index.html",
                     "target": "_self"
                 },
                 {

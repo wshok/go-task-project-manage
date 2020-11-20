@@ -11,7 +11,7 @@ define(["jquery", "easy-admin", "dragula"], function ($, ea, dragula) {
 
     var Controller = {
         index: function () {
-            dragula([$("#handle-list-1").get(0), $("#handle-list-2").get(0)]);
+            dragula([$("#drag-list-1").get(0), $("#drag-list-2").get(0), $("#drag-list-3").get(0)]);
 
             ea.listen();
         },

@@ -520,14 +520,14 @@ table样式
     white-space: nowrap;
 }
 
-.layui-quote-grey {
+#drag-list-1 .layui-elem-quote {
     border-top: 1px solid gainsboro;
     border-right: 1px solid gainsboro;
     border-bottom: 1px solid gainsboro;
-    border-left: 5px solid grey;
+    border-left: 5px solid gray;
 }
 
-.layui-quote-ori {
+#drag-list-2 .layui-elem-quote {
     border-top: 1px solid gainsboro;
     border-right: 1px solid gainsboro;
     border-bottom: 1px solid gainsboro;
