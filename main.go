@@ -74,6 +74,16 @@ func main() {
 		})
 	}
 
+	card := g.Group("/card")
+	{
+		card.GET("/index.html", func(c *gin.Context) {
+		    c.HTML(200, "card/index.html", gin.H{
+		    	"controller": "card",
+				"action": "index",
+		    })
+		})
+	}
+
 	g.Run(":8090")
 }
 

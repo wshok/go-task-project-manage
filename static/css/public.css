@@ -519,3 +519,17 @@ table样式
     background: goldenrod;
     white-space: nowrap;
 }
+
+.layui-quote-grey {
+    border-top: 1px solid gainsboro;
+    border-right: 1px solid gainsboro;
+    border-bottom: 1px solid gainsboro;
+    border-left: 5px solid grey;
+}
+
+.layui-quote-ori {
+    border-top: 1px solid gainsboro;
+    border-right: 1px solid gainsboro;
+    border-bottom: 1px solid gainsboro;
+    border-left: 5px solid #FF5722;
+}

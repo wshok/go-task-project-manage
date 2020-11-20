@@ -11,7 +11,7 @@
     },
     "menuInfo": [
         {
-            "id": 228,
+            "id": 1,
             "pid": 0,
             "title": "系统管理",
             "icon": "fa fa-cog",
@@ -19,27 +19,35 @@
             "target": "_self",
             "child": [
                 {
-                    "id": 244,
-                    "pid": 228,
+                    "id": 10,
+                    "pid": 1,
                     "title": "用户管理",
                     "icon": "fa fa-user",
                     "href": "/admin/index.html",
                     "target": "_self"
                 },
                 {
-                    "id": 245,
-                    "pid": 228,
+                    "id": 11,
+                    "pid": 1,
                     "title": "角色管理",
                     "icon": "fa fa-bitbucket-square",
                     "href": "/auth/index.html",
                     "target": "_self"
                 },
                 {
-                    "id": 254,
-                    "pid": 228,
+                    "id": 12,
+                    "pid": 1,
                     "title": "任务管理",
                     "icon": "fa fa-list",
                     "href": "/task/index.html",
+                    "target": "_self"
+                },
+                {
+                    "id": 13,
+                    "pid": 1,
+                    "title": "看板管理",
+                    "icon": "fa fa-list",
+                    "href": "/card/index.html",
                     "target": "_self"
                 }
             ]
