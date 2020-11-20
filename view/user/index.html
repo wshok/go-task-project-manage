@@ -1,0 +1,16 @@
+{{ define "user/index.html"}}
+
+{{ template "header" . }}
+
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <table id="currentTable" class="layui-table layui-hide"
+               data-auth-add="{:auth('user/add')}"
+               data-auth-edit="{:auth('user/edit')}"
+               data-auth-delete="{:auth('user/delete')}"
+               data-auth-password="{:auth('user/password')}"
+               lay-filter="currentTable">
+        </table>
+    </div>
+</div>
+{{end}}
