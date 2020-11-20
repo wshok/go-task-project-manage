@@ -537,3 +537,18 @@ table样式
 .drag .layui-elem-quote {
     cursor: grab;
 }
+
+.layui-elem-quote .layui-row .content {
+    margin-bottom: 10px;
+    overflow-wrap: break-word;
+}
+
+.layui-elem-quote .layui-row .datetime {
+    margin-bottom: -10px;
+    text-align: left;
+}
+
+.layui-elem-quote .layui-row .user {
+    margin-bottom: -10px;
+    text-align: right;
+}
