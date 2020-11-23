@@ -29,7 +29,7 @@ define(["jquery", "easy-admin", "dragula"], function ($, ea, dragula) {
                 // console.log('drag',el)
             }).on('drop', function (el, target, source, sibling)  {
                 console.log('drop',el, target, source, sibling)
-                // todo
+                // todo, update task status
             }).on('over', function (el, container) {
                 // console.log('over',el, container)
             }).on('out', function (el, container) {

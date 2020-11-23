@@ -49,6 +49,14 @@
                     "icon": "fa fa-list",
                     "href": "/card/index.html",
                     "target": "_self"
+                },
+                {
+                    "id": 14,
+                    "pid": 1,
+                    "title": "日历管理",
+                    "icon": "fa fa-list",
+                    "href": "/task/calendar.html",
+                    "target": "_self"
                 }
             ]
         }

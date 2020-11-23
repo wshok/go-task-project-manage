@@ -72,6 +72,13 @@ func main() {
 				"action": "add",
 		    })
 		})
+		//
+		task.GET("/calendar.html", func(c *gin.Context) {
+		    c.HTML(200, "task/calendar.html", gin.H{
+		    	"controller": "task",
+				"action": "calendar",
+		    })
+		})
 	}
 
 	card := g.Group("/card")
