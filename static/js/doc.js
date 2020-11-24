@@ -4,9 +4,9 @@ define(["jquery", "easy-admin"], function ($, ea) {
         table_elem: '#currentTable',
         table_render_id: 'currentTableRenderId',
         index_url: 'api/doc.json',
-        add_url: 'task/add.html',
-        edit_url: 'api/task-edit.json',
-        delete_url: 'api/task-delete.json',
+        add_url: 'doc/add.html',
+        edit_url: '',
+        delete_url: '',
     };
 
     var Controller = {
