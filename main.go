@@ -25,6 +25,7 @@ func main() {
 
 	g.Static("/api", filepath.Join("", "./api"))
 
+
 	g.GET("/", func(c *gin.Context) {
 		c.HTML(200, "index/index.html", gin.H{
 			"controller": "index",
@@ -79,14 +80,10 @@ func main() {
 				"action": "",
 		    })
 		})
-	}
-
-	card := g.Group("/card")
-	{
-		card.GET("/index.html", func(c *gin.Context) {
-		    c.HTML(200, "card/index.html", gin.H{
-		    	"controller": "card",
-				"action": "index",
+		task.GET("/card.html", func(c *gin.Context) {
+		    c.HTML(200, "task/card.html", gin.H{
+		    	"controller": "task",
+				"action": "card",
 		    })
 		})
 	}
