@@ -161,7 +161,7 @@ body {
 }
 
 #menu {
-  padding: 16px;
+  /*padding: 16px;*/
 }
 
 #dropdownMenu-calendarType {
@@ -215,11 +215,11 @@ body {
 }
 
 #calendar {
-    position: absolute;
+    position: relative;
     left: 0;
     right: 0;
     bottom: 5px;
-    top: 64px;
+    top: 20px;
 }
 
 /** custom fontawesome */

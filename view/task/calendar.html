@@ -1,52 +1,69 @@
 {{ define "task/calendar.html" }}
+
 <!doctype html>
 <html lang="en">
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <title></title>
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
-  <!-- <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css"> -->
-  <!-- <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css"> -->
+  <meta charset="utf-8">
+  <title>{:sysconfig('site','site_name')}</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!--[if lt IE 9]>
+  <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+  <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <link rel="stylesheet" type="text/css" href="/static/plugs/tui-calendar/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/plugs/tui-calendar/tui-time-picker.css">
+  <link rel="stylesheet" type="text/css" href="/static/plugs/tui-calendar/tui-date-picker.css">
   <link rel="stylesheet" type="text/css" href="/static/plugs/tui-calendar/tui-calendar.css">
   <link rel="stylesheet" type="text/css" href="/static/plugs/tui-calendar/default.css">
   <link rel="stylesheet" type="text/css" href="/static/plugs/tui-calendar/icons.css">
+
+  <link rel="stylesheet" type="text/css" href="/static/css/public.css">
 </head>
 
 <body>
-  <div class="code-html">
-    <div id="menu">
-      <span id="menu-navi">
-        <button type="button" class="btn btn-default btn-sm move-today" data-action="move-today">Today</button>
-        <button type="button" class="btn btn-default btn-sm move-day" data-action="move-prev">
-          <i class="calendar-icon ic-arrow-line-left" data-action="move-prev"></i>
-        </button>
-        <button type="button" class="btn btn-default btn-sm move-day" data-action="move-next">
-          <i class="calendar-icon ic-arrow-line-right" data-action="move-next"></i>
-        </button>
-      </span>
-      <span id="renderRange" class="render-range"></span>
+  <div class="layuimini-container">
+    <div class="layuimini-main">
+      <div class="code-html">
+        <div id="menu">
+          <span id="menu-navi">
+            <button type="button" class="btn btn-default btn-sm move-today" data-action="move-today">Today</button>
+            <button type="button" class="btn btn-default btn-sm move-day" data-action="move-prev">
+              <i class="calendar-icon ic-arrow-line-left" data-action="move-prev"></i>
+            </button>
+            <button type="button" class="btn btn-default btn-sm move-day" data-action="move-next">
+              <i class="calendar-icon ic-arrow-line-right" data-action="move-next"></i>
+            </button>
+          </span>
+          <span id="renderRange" class="render-range"></span>
+        </div>
+        <div id="calendar"></div>
+      </div>
     </div>
-
-    <div id="calendar"></div>
   </div>
 
   <script src="/static/plugs/jquery-3.4.1/jquery-3.4.1.min.js"></script>
-  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->
-  <script src="https://uicdn.toast.com/tui.code-snippet/v1.5.2/tui-code-snippet.min.js"></script>
-  <!-- <script src="https://uicdn.toast.com/tui.time-picker/v2.0.3/tui-time-picker.min.js"></script> -->
-  <!-- <script src="https://uicdn.toast.com/tui.date-picker/v4.0.3/tui-date-picker.min.js"></script> -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.0.13/chance.min.js"></script>
+  <script src="/static/plugs/tui-calendar/bootstrap.min.js"></script>
+  <script src="/static/plugs/tui-calendar/tui-code-snippet.min.js"></script>
+  <script src="/static/plugs/tui-calendar/tui-time-picker.min.js"></script>
+  <script src="/static/plugs/tui-calendar/tui-date-picker.min.js"></script>
+  <script src="/static/plugs/tui-calendar/moment.min.js"></script>
+  <script src="/static/plugs/tui-calendar/chance.min.js"></script>
   
   <script src="/static/plugs/tui-calendar/tui-calendar.js"></script>
   <script src="/static/plugs/tui-calendar/calendars.js"></script>
   <script src="/static/plugs/tui-calendar/schedules.js"></script>
-  <script type="text/javascript" class="code-js">
+
+  <script type="text/javascript">
   var cal = new tui.Calendar('#calendar', {
-    defaultView: 'month' // monthly view option
+    defaultView: 'month'
   });
   </script>
+
   <script src="/static/plugs/tui-calendar/default.js"></script>
 </body>
 </html>
+
 {{end}}
