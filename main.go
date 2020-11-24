@@ -88,6 +88,16 @@ func main() {
 		})
 	}
 
+	doc := g.Group("/doc")
+	{
+		doc.GET("/index.html", func(c *gin.Context) {
+		    c.HTML(200, "doc/index.html", gin.H{
+		    	"controller": "doc",
+				"action": "index",
+		    })
+		})
+	}
+
 	g.Run(":8090")
 }
 

@@ -13,7 +13,7 @@
         {
             "id": 1,
             "pid": 0,
-            "title": "系统管理",
+            "title": "系统",
             "icon": "fa fa-cog",
             "href": "",
             "target": "_self",
@@ -21,7 +21,7 @@
                 {
                     "id": 10,
                     "pid": 1,
-                    "title": "用户管理",
+                    "title": "用户",
                     "icon": "fa fa-user",
                     "href": "/user/index.html",
                     "target": "_self"
@@ -29,7 +29,7 @@
                 {
                     "id": 11,
                     "pid": 1,
-                    "title": "角色管理",
+                    "title": "角色",
                     "icon": "fa fa-bitbucket-square",
                     "href": "/auth/index.html",
                     "target": "_self"
@@ -37,7 +37,7 @@
                 {
                     "id": 12,
                     "pid": 1,
-                    "title": "任务管理",
+                    "title": "任务",
                     "icon": "fa fa-list",
                     "href": "/task/index.html",
                     "target": "_self"
@@ -45,7 +45,7 @@
                 {
                     "id": 13,
                     "pid": 1,
-                    "title": "看板管理",
+                    "title": "看板",
                     "icon": "fa fa-list",
                     "href": "/task/card.html",
                     "target": "_self"
@@ -53,9 +53,17 @@
                 {
                     "id": 14,
                     "pid": 1,
-                    "title": "日历管理",
+                    "title": "日历",
                     "icon": "fa fa-list",
                     "href": "/task/calendar.html",
+                    "target": "_self"
+                },
+                {
+                    "id": 15,
+                    "pid": 1,
+                    "title": "文档",
+                    "icon": "fa fa-list",
+                    "href": "/doc/index.html",
                     "target": "_self"
                 }
             ]
