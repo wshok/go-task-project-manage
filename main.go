@@ -107,7 +107,9 @@ func main() {
 	g.Run(":8090")
 }
 
-
+// built-in: role:: administrator/projector/employee/master.
+// department/doc-category/task-type :: direct save chineses-name, can add.
+//
 // func fileExists(fpath string) bool {
 // 	if _, err := os.Stat(fpath); err == nil {
 // 		return true
