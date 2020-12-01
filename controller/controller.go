@@ -3,13 +3,12 @@ package controller
 import (
 	"github.com/gin-gonic/gin"
 
-	"app/helper"
 	"app/module"
 
 	// "html/template"
 	// "fmt"
-	"strings"
-	"strconv"
+	// "strings"
+	// "strconv"
 )
 
 
@@ -18,10 +17,17 @@ func UserList(c *gin.Context) {
 	c.HTML(200, "user/index.html", gin.H{
     	"controller": "user",
 		"action": "index",
-		"data": "",
+		"data": module.UserList(),
     })
 }
 
+func TaskList(c *gin.Context) {
+	c.HTML(200, "task/index.html", gin.H{
+    	"controller": "task",
+		"action": "index",
+		"data": module.TaskList(),
+    })
+}
 
 // func Index(c *gin.Context) {
 

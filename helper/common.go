@@ -1,12 +1,10 @@
 package helper
 
 import (
-	"bytes"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
-	"time"
 )
 
 func GetCurrPath() string {
@@ -17,10 +15,4 @@ func GetCurrPath() string {
 	splitstring = strings.Split(path, splitstring[size-1])
 	ret := strings.Replace(splitstring[0], "\\", "/", size-1)
 	return ret
-}
-
-
-func ReadMore(text []byte) []byte {
-	ary := bytes.Split(text, []byte("<!--more-->"))
-	return ary[0]
 }

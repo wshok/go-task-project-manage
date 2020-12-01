@@ -11,8 +11,8 @@ import (
 )
 
 type Pager struct {
-	FirstRow     int    // 起始行数
-	ListRows     int    // 列表每页显示行数
+	Offset       int    // 起始行数
+	Size         int    // 列表每页显示行数
 	TotalPages   int    // 总页数
 	TotalRows    int    // 总行数
 	NowPage      int    // 当前页

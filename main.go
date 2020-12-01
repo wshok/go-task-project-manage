@@ -6,6 +6,8 @@ import (
 	"os"
 	"html/template"
 
+	"app/controller"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -41,32 +43,23 @@ func main() {
 
 	user := g.Group("/user")
 	{
-		user.GET("/index.html", func(c *gin.Context) {
-		    c.HTML(200, "user/index.html", gin.H{
-		    	"controller": "user",
-				"action": "index",
-		    })
-		})
+		user.GET("/index.html", controller.UserList)
 	}
 
-	auth := g.Group("/auth")
-	{
-		auth.GET("/index.html", func(c *gin.Context) {
-		    c.HTML(200, "auth/index.html", gin.H{
-		    	"controller": "auth",
-				"action": "index",
-		    })
-		})
-	}
+	// auth := g.Group("/auth")
+	// {
+	// 	auth.GET("/index.html", func(c *gin.Context) {
+	// 	    c.HTML(200, "auth/index.html", gin.H{
+	// 	    	"controller": "auth",
+	// 			"action": "index",
+	// 	    })
+	// 	})
+	// }
 
 	task := g.Group("/task")
 	{
-		task.GET("/index.html", func(c *gin.Context) {
-		    c.HTML(200, "task/index.html", gin.H{
-		    	"controller": "task",
-				"action": "index",
-		    })
-		})
+		task.GET("/index.html", controller.TaskList)
+
 		task.GET("/add.html", func(c *gin.Context) {
 		    c.HTML(200, "task/add.html", gin.H{
 		    	"controller": "task",

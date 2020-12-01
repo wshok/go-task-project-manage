@@ -2,10 +2,7 @@ package module
 
 import (
 
-	"app/helper"
-	// "app/helper"
-
-	"fmt"
+	// "fmt"
 	// "flag"
 	// "time"
 	// "strconv"
@@ -13,12 +10,12 @@ import (
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/mattn/go-sqlite3"
-	"github.com/cihub/seelog"
+	// "github.com/cihub/seelog"
 )
 
-type LimitRows struct {
-	Start int
-	Size  int
+type Page struct {
+	Offset int
+	Size   int
 }
 
 type Doc struct {
@@ -27,41 +24,55 @@ type Doc struct {
 	Content      []byte
 	Category     []byte
 	Author       []byte
+	Create_time  []byte
+	Update_time  []byte
+	Delete_time  []byte
+}
 
-	Created      string
-	Modified     []byte
+type Task struct {
+	Id           []byte
+	Title        []byte
+	Content      []byte
+	Owner        []byte
+	Status       []byte
+	Progress     []byte
+	Project      []byte
+	Type         []byte
+	Accessory    []byte
+	Start_time   []byte
+	End_time     []byte
+	Finish_time  []byte
+	Create_time  []byte
+	Update_time  []byte
+	Delete_time  []byte
 }
 
 
 type User struct {
-	Uid   []byte
-	Name   []byte
-	Password   []byte
-	Mail   []byte
-	Url   []byte
-	Screenname   []byte
-	Created   []byte
-	Activated   []byte
-	Logged   []byte
-	Group   []byte
-	Authcode   []byte
+	Id           []byte
+	Username     []byte
+	Realname     []byte
+	Password     []byte
+	Email        []byte
+	Phone        []byte
+	Qq           []byte
+	Gender       []byte
+	Department   []byte
+	Role         []byte
+	Create_time  []byte
+	Update_time  []byte
+	Delete_time  []byte
 }
 
-type Filter struct {
-	Page     string
-	Category string
-	Year     string
-	Month    string
-}
 
 var (
-	db     *gorm.DB
-	dsn string "data/j8rtiEF10ysQY.db"
+	db   *gorm.DB
+	dsn string = "data/j8rtiEF10ysQY.db"
 )
 
 
 func init() {
-	DB, _ = opendb()
+	db, _ = opendb()
 }
 
 
@@ -83,6 +94,20 @@ func opendb() (*gorm.DB, error) {
   	// defer db.Close()
 
 	return db, err
+}
+
+
+func UserList() []User {
+	var val []User
+
+	// var p Page {
+	// 	Start: (page - 1) * p.ListRows,
+	// 	Size:  p.ListRows,
+	// }
+
+	db.Model(&User{}).Where("delete_time = 0").Order("id desc").Scan(&val)
+
+	return val
 }
 
 // func ArticleCount(f *Filter) int {
