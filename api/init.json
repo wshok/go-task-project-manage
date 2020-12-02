@@ -7,7 +7,7 @@
     "homeInfo": {
         "title": "后台首页",
         "icon": "fa fa-home",
-        "href": "/index/welcome.html"
+        "href": "/index/welcome"
     },
     "menuInfo": [
         {
@@ -23,15 +23,7 @@
                     "pid": 1,
                     "title": "用户",
                     "icon": "fa fa-user",
-                    "href": "/user/index.html",
-                    "target": "_self"
-                },
-                {
-                    "id": 11,
-                    "pid": 1,
-                    "title": "角色",
-                    "icon": "fa fa-bitbucket-square",
-                    "href": "/auth/index.html",
+                    "href": "/user/index",
                     "target": "_self"
                 },
                 {
@@ -39,7 +31,7 @@
                     "pid": 1,
                     "title": "任务",
                     "icon": "fa fa-list",
-                    "href": "/task/index.html",
+                    "href": "/task/index",
                     "target": "_self"
                 },
                 {
@@ -47,7 +39,7 @@
                     "pid": 1,
                     "title": "看板",
                     "icon": "fa fa-list",
-                    "href": "/task/card.html",
+                    "href": "/task/card",
                     "target": "_self"
                 },
                 {
@@ -55,7 +47,7 @@
                     "pid": 1,
                     "title": "日历",
                     "icon": "fa fa-list",
-                    "href": "/task/calendar.html",
+                    "href": "/task/calendar",
                     "target": "_self"
                 },
                 {
@@ -63,7 +55,7 @@
                     "pid": 1,
                     "title": "文档",
                     "icon": "fa fa-list",
-                    "href": "/doc/index.html",
+                    "href": "/doc/index",
                     "target": "_self"
                 }
             ]

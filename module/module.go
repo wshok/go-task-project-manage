@@ -19,49 +19,49 @@ type Page struct {
 }
 
 type Doc struct {
-	id           []byte
-	Title        []byte
-	Content      []byte
-	Category     []byte
-	Author       []byte
-	Create_time  []byte
-	Update_time  []byte
-	Delete_time  []byte
+	id           int
+	Title        string
+	Content      string
+	Category     string
+	Author       int
+	Create_time  int
+	Update_time  int
+	Delete_time  int
 }
 
 type Task struct {
-	Id           []byte
-	Title        []byte
-	Content      []byte
-	Owner        []byte
-	Status       []byte
-	Progress     []byte
-	Project      []byte
-	Type         []byte
-	Accessory    []byte
-	Start_time   []byte
-	End_time     []byte
-	Finish_time  []byte
-	Create_time  []byte
-	Update_time  []byte
-	Delete_time  []byte
+	Id           int
+	Title        string
+	Content      string
+	Owner        int
+	Status       int
+	Progress     int
+	Project      int
+	Type         string
+	Accessory    string
+	Start_time   int
+	End_time     int
+	Finish_time  int
+	Create_time  int
+	Update_time  int
+	Delete_time  int
 }
 
 
 type User struct {
-	Id           []byte
-	Username     []byte
-	Realname     []byte
-	Password     []byte
-	Email        []byte
-	Phone        []byte
-	Qq           []byte
-	Gender       []byte
-	Department   []byte
-	Role         []byte
-	Create_time  []byte
-	Update_time  []byte
-	Delete_time  []byte
+	Id           int
+	Username     string
+	Realname     string
+	Password     string
+	Email        string
+	Phone        string
+	Qq           string
+	Gender       int
+	Department   string
+	Role         int
+	Create_time  int
+	Update_time  int
+	Delete_time  int
 }
 
 
@@ -81,7 +81,7 @@ func opendb() (*gorm.DB, error) {
 	// logConfigPath := flag.String("L", "conf/seelog.xml", "log config file path")
 
 	gorm.DefaultTableNameHandler = func (db *gorm.DB, defaultTableName string) string  {
-	    return "typecho_" + defaultTableName;
+	    return "hd_" + defaultTableName;
 	}
 
 	db, err := gorm.Open("sqlite3", dsn)
@@ -89,7 +89,7 @@ func opendb() (*gorm.DB, error) {
 		return nil, err
 	}
 
-	db.SingularTable(false)
+	db.SingularTable(true)	// 禁用表名复数
 
   	// defer db.Close()
 
@@ -106,6 +106,14 @@ func UserList() []User {
 	// }
 
 	db.Model(&User{}).Where("delete_time = 0").Order("id desc").Scan(&val)
+
+	return val
+}
+
+func TaskList() []Task {
+	var val []Task
+
+	db.Model(&Task{}).Where("delete_time = 0").Order("id desc").Scan(&val)
 
 	return val
 }

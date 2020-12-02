@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"app/module"
+	"app/helper"
 
 	// "html/template"
 	// "fmt"
@@ -14,19 +15,41 @@ import (
 
 func UserList(c *gin.Context) {
 
-	c.HTML(200, "user/index.html", gin.H{
-    	"controller": "user",
-		"action": "index",
-		"data": module.UserList(),
-    })
+	if helper.IsAjax(c) {
+
+		c.JSON(200, gin.H{
+			"code": 0,
+			"msg": "",
+			"count": 10,
+			"data": module.UserList(),
+		})
+
+	} else {
+
+		c.HTML(200, "user/index.html", gin.H{
+	    	"controller": "user",
+			"action": "index",
+	    })
+	}
 }
 
 func TaskList(c *gin.Context) {
-	c.HTML(200, "task/index.html", gin.H{
-    	"controller": "task",
-		"action": "index",
-		"data": module.TaskList(),
-    })
+	if helper.IsAjax(c) {
+
+		c.JSON(200, gin.H{
+			"code": 0,
+			"msg": "",
+			"count": 10,
+			"data": module.TaskList(),
+		})
+
+	} else {
+
+		c.HTML(200, "task/index.html", gin.H{
+	    	"controller": "task",
+			"action": "index",
+	    })	
+	}
 }
 
 // func Index(c *gin.Context) {

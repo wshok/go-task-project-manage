@@ -3,7 +3,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
     var init = {
         table_elem: '#currentTable',
         table_render_id: 'currentTableRenderId',
-        index_url: 'api/doc.json',
+        index_url: 'doc/index',
         add_url: 'doc/add.html',
         edit_url: '',
         delete_url: '',
@@ -26,12 +26,12 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 //     'delete'
                 // ],
                 cols: [[
-                    {field: 'category.title', width: 150, title: '分类', sort: true},
-                    {field: 'title', minWidth:300, title: '标题', templet:function(d){
-                        return '<a href="/doc/id/'+d.id+'">'+ d.title +'</a>'
+                    {field: 'Category', width: 150, title: '分类', sort: true},
+                    {field: 'Title', minWidth:300, title: '标题', templet:function(d){
+                        return '<a href="/doc/id/'+d.Id+'">'+ d.Title +'</a>'
                       }},
-                    {field: 'author', width: 120, title: '作者', search: false},
-                    {field: 'create_time', width: 180, title: '创建时间', sort: true, search:false},
+                    {field: 'Author', width: 120, title: '作者', search: false},
+                    {field: 'Create_time', width: 180, title: '创建时间', sort: true, search:false},
                     {
                         width: 150,
                         title: '操作',

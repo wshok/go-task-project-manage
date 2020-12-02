@@ -41,10 +41,10 @@ func NewPager(p *Pager, style string) template.HTML {
 }
 
 func (p *Pager) init() {
-	if (p.ListRows) >= MAX_ROWS || (p.ListRows < MIN_ROWS) {
-		p.ListRows = DEFAULT_ROWS
+	if (p.Size) >= MAX_ROWS || (p.Size < MIN_ROWS) {
+		p.Size = DEFAULT_ROWS
 	}
-	p.TotalPages = int(math.Ceil(float64(p.TotalRows) / float64(p.ListRows)))
+	p.TotalPages = int(math.Ceil(float64(p.TotalRows) / float64(p.Size)))
 	if p.PageName == "" {
 		p.PageName = "p"
 	}
@@ -54,7 +54,7 @@ func (p *Pager) init() {
 	if p.TotalPages > 0 && p.NowPage > p.TotalPages {
 		p.NowPage = p.TotalPages
 	}
-	p.FirstRow = p.ListRows * (p.NowPage - 1)
+	p.Offset = p.Size * (p.NowPage - 1)
 	if p.Plus < 1 {
 		p.Plus = PAGE_OFFSET
 	}
@@ -172,7 +172,7 @@ func (p *Pager) showStyle3() string {
 	}
 	back = fmt.Sprintf("Total %d Records Split %d Page, Current %d Page, EachPage",
 		p.TotalRows, p.TotalPages, p.NowPage)
-	back += fmt.Sprintf("<input type=\"text\" value=\"%d\" id=\"pageSize\" size=\"3\" />", p.ListRows)
+	back += fmt.Sprintf("<input type=\"text\" value=\"%d\" id=\"pageSize\" size=\"3\" />", p.Size)
 	back += p.FirstPage() + "\n"
 	back += p.PrePage() + "\n"
 	back += p.NextPage() + "\n"

@@ -34,7 +34,7 @@ func main() {
 			"action": "index",
 		})
 	})
-	g.GET("/index/welcome.html", func(c *gin.Context) {
+	g.GET("/index/welcome", func(c *gin.Context) {
 	    c.HTML(200, "index/welcome.html", gin.H{
 	    	"controller": "index",
 			"action": "welcome",
@@ -43,7 +43,7 @@ func main() {
 
 	user := g.Group("/user")
 	{
-		user.GET("/index.html", controller.UserList)
+		user.GET("/index", controller.UserList)
 	}
 
 	// auth := g.Group("/auth")
@@ -58,22 +58,22 @@ func main() {
 
 	task := g.Group("/task")
 	{
-		task.GET("/index.html", controller.TaskList)
+		task.GET("/index", controller.TaskList)
 
-		task.GET("/add.html", func(c *gin.Context) {
+		task.GET("/add", func(c *gin.Context) {
 		    c.HTML(200, "task/add.html", gin.H{
 		    	"controller": "task",
 				"action": "add",
 		    })
 		})
 		//
-		task.GET("/calendar.html", func(c *gin.Context) {
+		task.GET("/calendar", func(c *gin.Context) {
 		    c.HTML(200, "task/calendar.html", gin.H{
 		    	"controller": "",
 				"action": "",
 		    })
 		})
-		task.GET("/card.html", func(c *gin.Context) {
+		task.GET("/card", func(c *gin.Context) {
 		    c.HTML(200, "task/card.html", gin.H{
 		    	"controller": "task",
 				"action": "card",
@@ -83,13 +83,13 @@ func main() {
 
 	doc := g.Group("/doc")
 	{
-		doc.GET("/index.html", func(c *gin.Context) {
+		doc.GET("/index", func(c *gin.Context) {
 		    c.HTML(200, "doc/index.html", gin.H{
 		    	"controller": "doc",
 				"action": "index",
 		    })
 		})
-		doc.GET("/add.html", func(c *gin.Context) {
+		doc.GET("/add", func(c *gin.Context) {
 		    c.HTML(200, "doc/add.html", gin.H{
 		    	"controller": "doc",
 				"action": "add",
