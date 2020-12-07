@@ -46,16 +46,6 @@ func main() {
 		user.GET("/index", controller.UserList)
 	}
 
-	// auth := g.Group("/auth")
-	// {
-	// 	auth.GET("/index.html", func(c *gin.Context) {
-	// 	    c.HTML(200, "auth/index.html", gin.H{
-	// 	    	"controller": "auth",
-	// 			"action": "index",
-	// 	    })
-	// 	})
-	// }
-
 	task := g.Group("/task")
 	{
 		task.GET("/index", controller.TaskList)
@@ -83,12 +73,8 @@ func main() {
 
 	doc := g.Group("/doc")
 	{
-		doc.GET("/index", func(c *gin.Context) {
-		    c.HTML(200, "doc/index.html", gin.H{
-		    	"controller": "doc",
-				"action": "index",
-		    })
-		})
+		doc.GET("/index", controller.DocList)
+		
 		doc.GET("/add", func(c *gin.Context) {
 		    c.HTML(200, "doc/add.html", gin.H{
 		    	"controller": "doc",

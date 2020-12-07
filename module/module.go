@@ -118,6 +118,14 @@ func TaskList() []Task {
 	return val
 }
 
+func DocList() []Doc {
+	var val []Doc
+
+	db.Model(&Doc{}).Where("delete_time = 0").Order("id desc").Scan(&val)
+
+	return val
+}
+
 // func ArticleCount(f *Filter) int {
 // 	var (
 // 		val      int

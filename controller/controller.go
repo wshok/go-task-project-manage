@@ -52,6 +52,25 @@ func TaskList(c *gin.Context) {
 	}
 }
 
+func DocList(c *gin.Context) {
+	if helper.IsAjax(c) {
+
+		c.JSON(200, gin.H{
+			"code": 0,
+			"msg": "",
+			"count": 10,
+			"data": module.DocList(),
+		})
+
+	} else {
+
+		c.HTML(200, "doc/index.html", gin.H{
+	    	"controller": "doc",
+			"action": "index",
+	    })	
+	}
+}
+
 // func Index(c *gin.Context) {
 
 // 	curPage, _ := strconv.Atoi(c.Param("p"))
