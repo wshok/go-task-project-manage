@@ -7,7 +7,7 @@ define(["jquery", "easy-admin", "dragula"], function ($, ea, dragula) {
         add_url: 'task/add.html',
         edit_url: 'api/task-edit.json',
         delete_url: 'api/task-delete.json',
-        card_url: 'api/task.json',
+        // card_url: 'api/task.json',
     };
 
     var Controller = {

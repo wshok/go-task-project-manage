@@ -71,6 +71,15 @@ func DocList(c *gin.Context) {
 	}
 }
 
+
+func CardList(c *gin.Context) {
+	c.HTML(200, "task/card.html", gin.H{
+    	"controller": "task",
+		"action": "card",
+		"data": module.TaskList(),
+    })
+}
+
 // func Index(c *gin.Context) {
 
 // 	curPage, _ := strconv.Atoi(c.Param("p"))

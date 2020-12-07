@@ -63,10 +63,12 @@ func main() {
 				"action": "",
 		    })
 		})
+
 		task.GET("/card", func(c *gin.Context) {
 		    c.HTML(200, "task/card.html", gin.H{
 		    	"controller": "task",
 				"action": "card",
+				"data": module.TaskList(),
 		    })
 		})
 	}
@@ -74,7 +76,7 @@ func main() {
 	doc := g.Group("/doc")
 	{
 		doc.GET("/index", controller.DocList)
-		
+
 		doc.GET("/add", func(c *gin.Context) {
 		    c.HTML(200, "doc/add.html", gin.H{
 		    	"controller": "doc",
@@ -88,6 +90,7 @@ func main() {
 
 // built-in: role:: administrator/projector/employee/master.
 // department/doc-category/task-type :: direct save chineses-name, can add.
+// task-status: todo/doing/done
 //
 // func fileExists(fpath string) bool {
 // 	if _, err := os.Stat(fpath); err == nil {
