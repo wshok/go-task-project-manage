@@ -3,10 +3,11 @@ package main
 import (
 	"fmt"
 	"path/filepath"
-	"os"
+	// "os"
 	"html/template"
 
 	"app/controller"
+	"app/helper"
 
 	"github.com/gin-gonic/gin"
 )
@@ -74,6 +75,7 @@ func main() {
 		})
 	}
 
+
 	g.Run(":8090")
 }
 
@@ -91,9 +93,10 @@ func main() {
 var helperFuncs = template.FuncMap {
 	"jsExists": func (fpath string) bool {
 		jspath := fmt.Sprintf("./static/js/%s.js", fpath)
-		if _, err := os.Stat(jspath); err == nil {
+		if _, err := helper.PathExists(jspath); err == nil {
 			return true
 		}
 		return false
 	},
+	"timeFormat": helper.TimeFormat,
 }

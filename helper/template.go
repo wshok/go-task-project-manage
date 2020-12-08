@@ -10,6 +10,13 @@ func DateFormat(date time.Time, layout string) string {
 	return date.Format(layout)
 }
 
+func TimeFormat(sec int64) string {
+	if sec < 1 {
+		return ""
+	}
+	return time.Unix(sec, 0).Format("2006-01-02")
+}
+
 // 截取字符串
 func Substring(source string, start, end int) string {
 	rs := []rune(source)
@@ -40,5 +47,3 @@ func Add(a1, a2 int) int {
 func Minus(a1, a2 int) int {
 	return a1 - a2
 }
-
-

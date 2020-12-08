@@ -30,9 +30,9 @@ type User struct {
 	Gender       int
 	Department   string
 	Role         int
-	CreateTime   int
-	UpdateTime   int
-	DeleteTime   int
+	CreateTime   int64
+	UpdateTime   int64
+	DeleteTime   int64
 }
 
 type Doc struct {
@@ -42,9 +42,9 @@ type Doc struct {
 	Category     string
 	Uid          int
 	User         User  `gorm:"ForeignKey:Uid;AssociationForeignKey:id"`
-	CreateTime   int
-	UpdateTime   int
-	DeleteTime   int
+	CreateTime   int64
+	UpdateTime   int64
+	DeleteTime   int64
 }
 
 type Task struct {
@@ -58,12 +58,12 @@ type Task struct {
 	Project      int
 	Type         string
 	Accessory    string
-	StartTime    int
-	EndTime      int
-	FinishTime   int
-	CreateTime   int
-	UpdateTime   int
-	DeleteTime   int
+	StartTime    int64
+	EndTime      int64
+	FinishTime   int64
+	CreateTime   int64
+	UpdateTime   int64
+	DeleteTime   int64
 }
 
 
@@ -128,6 +128,8 @@ func DocList() []Doc {
 	return val
 }
 
+
+// 
 // func ArticleCount(f *Filter) int {
 // 	var (
 // 		val      int
