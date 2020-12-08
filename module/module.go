@@ -4,7 +4,7 @@ import (
 
 	// "fmt"
 	// "flag"
-	// "time"
+	"time"
 	// "strconv"
 	// "database/sql"
 
@@ -60,6 +60,7 @@ type Task struct {
 	Accessory    string
 	StartTime    int64
 	EndTime      int64
+	BeginTime    int64
 	FinishTime   int64
 	CreateTime   int64
 	UpdateTime   int64
@@ -128,6 +129,12 @@ func DocList() []Doc {
 	return val
 }
 
+
+func TaskModify(tid int, status string) {
+	if "doing" == status {
+		db.Model(&Task{}).Where("id = ?", tid).Updates(Task{Status:"doing", BeginTime: time.Now().Unix()})
+	}
+}
 
 // 
 // func ArticleCount(f *Filter) int {

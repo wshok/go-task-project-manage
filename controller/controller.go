@@ -9,7 +9,7 @@ import (
 	// "html/template"
 	// "fmt"
 	// "strings"
-	// "strconv"
+	"strconv"
 )
 
 
@@ -51,6 +51,20 @@ func TaskList(c *gin.Context) {
 	    })	
 	}
 }
+
+
+func TaskEdit(c *gin.Context) {
+	// var taskId = c.Param("id")
+}
+
+
+func TaskModify(c *gin.Context) {
+	var status = c.PostForm("status")
+	taskId, _ := strconv.Atoi(c.Param("id"))
+
+	module.TaskModify(taskId, status)
+}
+
 
 func DocList(c *gin.Context) {
 	if helper.IsAjax(c) {

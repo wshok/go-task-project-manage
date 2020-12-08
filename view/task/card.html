@@ -9,7 +9,7 @@
     <div class="layui-col-md4">
       <div class="layui-card">
         <div class="layui-card-header"><span class="layui-badge layui-bg-gray">未开始</span></div>
-        <div class="layui-card-body drag" id="drag-list-1">
+        <div class="layui-card-body drag" id="todo">
           {{ range $k, $v := .data }}
           {{ if eq $v.Status  "todo" }}
           <blockquote class="layui-elem-quote" id="{{ $v.Id }}">
@@ -34,7 +34,7 @@
     <div class="layui-col-md4">
       <div class="layui-card" >
         <div class="layui-card-header"><span class="layui-badge">进行中</span></div>
-        <div class="layui-card-body drag" id="drag-list-2">
+        <div class="layui-card-body drag" id="doing">
 
           {{ range $k, $v := .data }}
           {{ if eq $v.Status  "doing" }}
@@ -61,7 +61,7 @@
     <div class="layui-col-md4">
       <div class="layui-card">
         <div class="layui-card-header"><span class="layui-badge layui-bg-green">已完成</span></div>
-        <div class="layui-card-body drag" id="drag-list-3">
+        <div class="layui-card-body drag" id="done">
           {{ range $k, $v := .data }}
           {{ if eq $v.Status  "done" }}
           <blockquote class="layui-elem-quote" id="{{ $v.Id }}">

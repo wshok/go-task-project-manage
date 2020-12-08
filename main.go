@@ -58,6 +58,10 @@ func main() {
 		    })
 		})
 
+		task.POST("/edit/:id", controller.TaskEdit)
+
+		task.POST("/modify/:id", controller.TaskModify)
+
 		task.GET("/calendar", controller.Calendar)
 
 		task.GET("/card", controller.CardList)
