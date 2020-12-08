@@ -18,35 +18,6 @@ type Page struct {
 	Size   int
 }
 
-type Doc struct {
-	id           int
-	Title        string
-	Content      string
-	Category     string
-	Author       int
-	Create_time  int
-	Update_time  int
-	Delete_time  int
-}
-
-type Task struct {
-	Id           int
-	Title        string
-	Content      string
-	Owner        int
-	Status       int
-	Progress     int
-	Project      int
-	Type         string
-	Accessory    string
-	Start_time   int
-	End_time     int
-	Finish_time  int
-	Create_time  int
-	Update_time  int
-	Delete_time  int
-}
-
 
 type User struct {
 	Id           int
@@ -59,9 +30,40 @@ type User struct {
 	Gender       int
 	Department   string
 	Role         int
-	Create_time  int
-	Update_time  int
-	Delete_time  int
+	CreateTime   int
+	UpdateTime   int
+	DeleteTime   int
+}
+
+type Doc struct {
+	id           int
+	Title        string
+	Content      string
+	Category     string
+	Uid          int
+	User         User  `gorm:"ForeignKey:Uid;AssociationForeignKey:id"`
+	CreateTime   int
+	UpdateTime   int
+	DeleteTime   int
+}
+
+type Task struct {
+	Id           int
+	Title        string
+	Content      string
+	Uid          int
+    User         User  `gorm:"ForeignKey:Uid;AssociationForeignKey:id"`
+	Status       string
+	Progress     int
+	Project      int
+	Type         string
+	Accessory    string
+	StartTime    int
+	EndTime      int
+	FinishTime   int
+	CreateTime   int
+	UpdateTime   int
+	DeleteTime   int
 }
 
 
@@ -113,7 +115,7 @@ func UserList() []User {
 func TaskList() []Task {
 	var val []Task
 
-	db.Model(&Task{}).Where("delete_time = 0").Order("id desc").Scan(&val)
+	db.Model(&Task{}).Where("delete_time = 0").Order("id desc").Preload("User").Find(&val)
 
 	return val
 }
@@ -121,7 +123,7 @@ func TaskList() []Task {
 func DocList() []Doc {
 	var val []Doc
 
-	db.Model(&Doc{}).Where("delete_time = 0").Order("id desc").Scan(&val)
+	db.Model(&Doc{}).Where("delete_time = 0").Order("id desc").Preload("User").Find(&val)
 
 	return val
 }

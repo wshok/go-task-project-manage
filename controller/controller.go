@@ -80,6 +80,14 @@ func CardList(c *gin.Context) {
     })
 }
 
+
+func Calendar(c *gin.Context) {
+	c.HTML(200, "task/calendar.html", gin.H{
+    	"controller": "task",
+		"action": "card",
+    })
+}
+
 // func Index(c *gin.Context) {
 
 // 	curPage, _ := strconv.Atoi(c.Param("p"))
