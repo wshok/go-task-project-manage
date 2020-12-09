@@ -12,7 +12,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-
 func main() {
 
 	gin.SetMode(gin.ReleaseMode)
@@ -25,26 +24,29 @@ func main() {
 
 	g.Static("/static", filepath.Join("", "./static"))
 	g.Static("/plugs", filepath.Join("", "./static/plugs"))
-
 	g.Static("/api", filepath.Join("", "./api"))
-
 
 	g.GET("/", func(c *gin.Context) {
 		c.HTML(200, "index/index.html", gin.H{
 			"controller": "index",
-			"action": "index",
+			"action":     "index",
 		})
 	})
+
 	g.GET("/index/welcome", func(c *gin.Context) {
-	    c.HTML(200, "index/welcome.html", gin.H{
-	    	"controller": "index",
-			"action": "welcome",
-	    })
+		c.HTML(200, "index/welcome.html", gin.H{
+			"controller": "index",
+			"action":     "welcome",
+		})
 	})
 
 	user := g.Group("/user")
 	{
 		user.GET("/index", controller.UserList)
+
+		user.Any("/add", func(c *gin.Context) {
+			//
+		})
 	}
 
 	task := g.Group("/task")
@@ -52,13 +54,13 @@ func main() {
 		task.GET("/index", controller.TaskList)
 
 		task.GET("/add", func(c *gin.Context) {
-		    c.HTML(200, "task/add.html", gin.H{
-		    	"controller": "task",
-				"action": "add",
-		    })
+			c.HTML(200, "task/add.html", gin.H{
+				"controller": "task",
+				"action":     "add",
+			})
 		})
 
-		task.POST("/edit/:id", controller.TaskEdit)
+		task.Any("/edit", controller.TaskEdit)
 
 		task.POST("/modify/:id", controller.TaskModify)
 
@@ -72,13 +74,12 @@ func main() {
 		doc.GET("/index", controller.DocList)
 
 		doc.GET("/add", func(c *gin.Context) {
-		    c.HTML(200, "doc/add.html", gin.H{
-		    	"controller": "doc",
-				"action": "add",
-		    })
+			c.HTML(200, "doc/add.html", gin.H{
+				"controller": "doc",
+				"action":     "add",
+			})
 		})
 	}
-
 
 	g.Run(":8090")
 }
@@ -94,8 +95,8 @@ func main() {
 // 	return false
 // }
 
-var helperFuncs = template.FuncMap {
-	"jsExists": func (fpath string) bool {
+var helperFuncs = template.FuncMap{
+	"jsExists": func(fpath string) bool {
 		jspath := fmt.Sprintf("./static/js/%s.js", fpath)
 		if _, err := helper.PathExists(jspath); err == nil {
 			return true

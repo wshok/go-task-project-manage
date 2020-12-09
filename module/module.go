@@ -2,7 +2,7 @@ package module
 
 import (
 
-	// "fmt"
+	"fmt"
 	// "flag"
 	"time"
 	// "strconv"
@@ -20,51 +20,51 @@ type Page struct {
 
 
 type User struct {
-	Id           int
-	Username     string
-	Realname     string
-	Password     string
-	Email        string
-	Phone        string
-	Qq           string
-	Gender       int
-	Department   string
-	Role         int
-	CreateTime   int64
-	UpdateTime   int64
-	DeleteTime   int64
+	Id           int  `json:"id"`
+	Username     string    `json:"username,omitempty"`
+	Realname     string    `json:"realname,omitempty"`
+	Password     string    `json:"password,omitempty"`
+	Email        string    `json:"email,omitempty"`
+	Phone        string    `json:"phone,omitempty"`
+	Qq           string   `json:"qq,omitempty"`
+	Gender       int    `json:"gender,omitempty"`
+	Department   string `json:"department,omitempty"`
+	Role         int `json:"role,omitempty"`
+	CreateTime   int64 `json:"create_time,omitempty"`
+	UpdateTime   int64 `json:"update_time,omitempty"`
+	DeleteTime   int64 `json:"delete_time,omitempty"`
 }
 
 type Doc struct {
-	id           int
-	Title        string
-	Content      string
-	Category     string
-	Uid          int
+	Id           int  `json:"id"`
+	Title        string `json:"title,omitempty"`
+	Content      string `json:"content,omitempty"`
+	Category     string  `json:"category,omitempty"`
+	Uid          int  `json:"uid,omitempty"`
 	User         User  `gorm:"ForeignKey:Uid;AssociationForeignKey:id"`
-	CreateTime   int64
-	UpdateTime   int64
-	DeleteTime   int64
+	CreateTime   int64 `json:"create_time,omitempty"`
+	UpdateTime   int64 `json:"update_time,omitempty"`
+	DeleteTime   int64 `json:"delete_time,omitempty"`
 }
 
 type Task struct {
-	Id           int
-	Title        string
-	Content      string
-	Uid          int
+	Id           int  `json:"id"`
+	Title        string  `json:"title,omitempty"`
+	Content      string  `json:"content,omitempty"`
+	Uid          int  `json:"uid,omitempty"`
     User         User  `gorm:"ForeignKey:Uid;AssociationForeignKey:id"`
-	Status       string
-	Progress     int
-	Project      int
-	Type         string
-	Accessory    string
-	StartTime    int64
-	EndTime      int64
-	BeginTime    int64
-	FinishTime   int64
-	CreateTime   int64
-	UpdateTime   int64
-	DeleteTime   int64
+	Status       string  `json:"status,omitempty"`
+	Progress     int  `json:"progress,omitempty"`
+	Project      int  `json:"project,omitempty"`
+	Type         string  `json:"type,omitempty"`
+	Accessory    string  `json:"accessory,omitempty"`
+	StartTime    int64  `json:"start_time,omitempty"`
+	EndTime      int64  `json:"end_time,omitempty"`
+	BeginTime    int64  `json:"begin_time,omitempty"`
+	FinishTime   int64  `json:"finish_time,omitempty"`
+	CreateTime   int64 `json:"create_time,omitempty"`
+	UpdateTime   int64 `json:"update_time,omitempty"`
+	DeleteTime   int64 `json:"delete_time,omitempty"`
 }
 
 
@@ -121,21 +121,42 @@ func TaskList() []Task {
 	return val
 }
 
+func TaskEdit(tid string) int {
+	var task Task
+	db.First(&task, tid)
+
+	if task == (Task{}) {
+        return -1
+    }
+
+
+
+	fmt.Printf("%#v", task)
+}
+
+
+
+func TaskModify(tid, status string) bool {
+	if "doing" == status {
+		db.Model(&Task{}).Where("id = ?", tid).Updates(Task{Status:"doing", BeginTime: time.Now().Unix()})
+	} else if "done" == status {
+		db.Model(&Task{}).Where("id = ?", tid).Updates(Task{Status:"done", FinishTime: time.Now().Unix()})	
+	}
+
+	if db.RowsAffected > 0 || db.Error == nil {
+		return true
+	}
+
+	return false
+}
+
+
 func DocList() []Doc {
 	var val []Doc
 
 	db.Model(&Doc{}).Where("delete_time = 0").Order("id desc").Preload("User").Find(&val)
 
 	return val
-}
-
-
-func TaskModify(tid int, status string) {
-	if "doing" == status {
-		db.Model(&Task{}).Where("id = ?", tid).Updates(Task{Status:"doing", BeginTime: time.Now().Unix()})
-	} else if "done" == status {
-		db.Model(&Task{}).Where("id = ?", tid).Updates(Task{Status:"done", FinishTime: time.Now().Unix()})	
-	}
 }
 
 // 

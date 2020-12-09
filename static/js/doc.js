@@ -26,12 +26,13 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 //     'delete'
                 // ],
                 cols: [[
+                    {field: 'id', width: 80, title: 'ID', sort: true},
                     {field: 'Category', width: 150, title: '分类', sort: true},
                     {field: 'Title', minWidth:300, title: '标题', templet:function(d){
                         return '<a href="/doc/id/'+d.Id+'">'+ d.Title +'</a>'
                       }},
-                    {field: 'Author', width: 120, title: '作者', search: false},
-                    {field: 'Create_time', width: 180, title: '创建时间', sort: true, search:false},
+                    {field: 'User.Realname', width: 120, title: '作者', search: false},
+                    {field: 'CreateTime', width: 180, title: '创建时间', sort: true, search:false},
                     {
                         width: 150,
                         title: '操作',
