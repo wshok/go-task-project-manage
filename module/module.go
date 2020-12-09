@@ -1,7 +1,6 @@
 package module
 
 import (
-
 	"fmt"
 	// "flag"
 	"time"
@@ -18,73 +17,69 @@ type Page struct {
 	Size   int
 }
 
-
 type User struct {
-	Id           int  `json:"id"`
-	Username     string    `json:"username,omitempty"`
-	Realname     string    `json:"realname,omitempty"`
-	Password     string    `json:"password,omitempty"`
-	Email        string    `json:"email,omitempty"`
-	Phone        string    `json:"phone,omitempty"`
-	Qq           string   `json:"qq,omitempty"`
-	Gender       int    `json:"gender,omitempty"`
-	Department   string `json:"department,omitempty"`
-	Role         int `json:"role,omitempty"`
-	CreateTime   int64 `json:"create_time,omitempty"`
-	UpdateTime   int64 `json:"update_time,omitempty"`
-	DeleteTime   int64 `json:"delete_time,omitempty"`
+	Id         int    `json:"id"`
+	Username   string `json:"username,omitempty"`
+	Realname   string `json:"realname,omitempty"`
+	Password   string `json:"password,omitempty"`
+	Email      string `json:"email,omitempty"`
+	Phone      string `json:"phone,omitempty"`
+	Qq         string `json:"qq,omitempty"`
+	Gender     int    `json:"gender,omitempty"`
+	Department string `json:"department,omitempty"`
+	Role       int    `json:"role,omitempty"`
+	CreateTime int64  `json:"create_time,omitempty"`
+	UpdateTime int64  `json:"update_time,omitempty"`
+	DeleteTime int64  `json:"delete_time,omitempty"`
 }
 
 type Doc struct {
-	Id           int  `json:"id"`
-	Title        string `json:"title,omitempty"`
-	Content      string `json:"content,omitempty"`
-	Category     string  `json:"category,omitempty"`
-	Uid          int  `json:"uid,omitempty"`
-	User         User  `gorm:"ForeignKey:Uid;AssociationForeignKey:id"`
-	CreateTime   int64 `json:"create_time,omitempty"`
-	UpdateTime   int64 `json:"update_time,omitempty"`
-	DeleteTime   int64 `json:"delete_time,omitempty"`
+	Id         int    `json:"id"`
+	Title      string `json:"title,omitempty"`
+	Content    string `json:"content,omitempty"`
+	Category   string `json:"category,omitempty"`
+	Uid        int    `json:"uid,omitempty"`
+	User       User   `gorm:"ForeignKey:Uid;AssociationForeignKey:id"`
+	CreateTime int64  `json:"create_time,omitempty"`
+	UpdateTime int64  `json:"update_time,omitempty"`
+	DeleteTime int64  `json:"delete_time,omitempty"`
 }
 
 type Task struct {
-	Id           int  `json:"id"`
-	Title        string  `json:"title,omitempty"`
-	Content      string  `json:"content,omitempty"`
-	Uid          int  `json:"uid,omitempty"`
-    User         User  `gorm:"ForeignKey:Uid;AssociationForeignKey:id"`
-	Status       string  `json:"status,omitempty"`
-	Progress     int  `json:"progress,omitempty"`
-	Project      int  `json:"project,omitempty"`
-	Type         string  `json:"type,omitempty"`
-	Accessory    string  `json:"accessory,omitempty"`
-	StartTime    int64  `json:"start_time,omitempty"`
-	EndTime      int64  `json:"end_time,omitempty"`
-	BeginTime    int64  `json:"begin_time,omitempty"`
-	FinishTime   int64  `json:"finish_time,omitempty"`
-	CreateTime   int64 `json:"create_time,omitempty"`
-	UpdateTime   int64 `json:"update_time,omitempty"`
-	DeleteTime   int64 `json:"delete_time,omitempty"`
+	Id         int    `json:"id"`
+	Title      string `form:"title" json:"title,omitempty" binding:"required"`
+	Content    string `form:"content" json:"content,omitempty" binding:"required"`
+	Uid        string `form:"uid" json:"uid,omitempty" binding:"required"`
+	User       User   `gorm:"ForeignKey:Uid;AssociationForeignKey:id"`
+	Status     string `form:"status" json:"status,omitempty" binding:"required"`
+	Progress   string `form:"progress" json:"progress,omitempty" binding:"required"`
+	Project    string `form:"project" json:"project,omitempty" binding:"required"`
+	Type       string `form:"type" json:"type,omitempty" binding:"required"`
+	Accessory  string `form:"accessory" json:"accessory,omitempty"`
+	StartTime  int64  `form:"start_time" json:"start_time,omitempty" binding:"required"`
+	EndTime    int64  `form:"end_time" json:"end_time,omitempty" binding:"required"`
+	BeginTime  int64  `json:"begin_time,omitempty"`
+	FinishTime int64  `json:"finish_time,omitempty"`
+	CreateTime int64  `json:"create_time,omitempty"`
+	UpdateTime int64  `json:"update_time,omitempty"`
+	DeleteTime int64  `json:"delete_time,omitempty"`
 }
 
-
 var (
-	db   *gorm.DB
+	db  *gorm.DB
 	dsn string = "data/j8rtiEF10ysQY.db"
 )
-
 
 func init() {
 	db, _ = opendb()
 }
 
-
 func opendb() (*gorm.DB, error) {
 
 	// logConfigPath := flag.String("L", "conf/seelog.xml", "log config file path")
 
-	gorm.DefaultTableNameHandler = func (db *gorm.DB, defaultTableName string) string  {
-	    return "hd_" + defaultTableName;
+	gorm.DefaultTableNameHandler = func(db *gorm.DB, defaultTableName string) string {
+		return "hd_" + defaultTableName
 	}
 
 	db, err := gorm.Open("sqlite3", dsn)
@@ -92,13 +87,12 @@ func opendb() (*gorm.DB, error) {
 		return nil, err
 	}
 
-	db.SingularTable(true)	// 禁用表名复数
+	db.SingularTable(true) // 禁用表名复数
 
-  	// defer db.Close()
+	// defer db.Close()
 
 	return db, err
 }
-
 
 func UserList() []User {
 	var val []User
@@ -121,26 +115,25 @@ func TaskList() []Task {
 	return val
 }
 
-func TaskEdit(tid string) int {
+func TaskEdit(tid string, data Task) int {
 	var task Task
 	db.First(&task, tid)
 
 	if task == (Task{}) {
-        return -1
-    }
+		return -1
+	}
 
+	fmt.Printf("%#v", data)
 
-
-	fmt.Printf("%#v", task)
+	return 1
+	// fmt.Printf("%#v", task)
 }
-
-
 
 func TaskModify(tid, status string) bool {
 	if "doing" == status {
-		db.Model(&Task{}).Where("id = ?", tid).Updates(Task{Status:"doing", BeginTime: time.Now().Unix()})
+		db.Model(&Task{}).Where("id = ?", tid).Updates(Task{Status: "doing", BeginTime: time.Now().Unix()})
 	} else if "done" == status {
-		db.Model(&Task{}).Where("id = ?", tid).Updates(Task{Status:"done", FinishTime: time.Now().Unix()})	
+		db.Model(&Task{}).Where("id = ?", tid).Updates(Task{Status: "done", FinishTime: time.Now().Unix()})
 	}
 
 	if db.RowsAffected > 0 || db.Error == nil {
@@ -150,7 +143,6 @@ func TaskModify(tid, status string) bool {
 	return false
 }
 
-
 func DocList() []Doc {
 	var val []Doc
 
@@ -159,7 +151,7 @@ func DocList() []Doc {
 	return val
 }
 
-// 
+//
 // func ArticleCount(f *Filter) int {
 // 	var (
 // 		val      int
@@ -181,7 +173,6 @@ func DocList() []Doc {
 // 	return val
 // }
 
-
 // func ArticleList(l *LimitRows, f *Filter) []Content {
 // 	var (
 // 		val      []Content
@@ -200,7 +191,6 @@ func DocList() []Doc {
 // 	return val
 // }
 
-
 // func LeastPosted() []Content {
 // 	var (
 // 		val      []Content
@@ -210,7 +200,6 @@ func DocList() []Doc {
 
 // 	return val
 // }
-
 
 // func Category() []Meta {
 // 	var (
@@ -232,7 +221,7 @@ func DocList() []Doc {
 // 	var val []Result
 
 // 	DB.Table("typecho_contents").Select("strftime('%Y/%m',datetime(created, 'unixepoch')) AS yearmonth, COUNT(1) AS count") .Where("status=? AND type=?", "publish", "post") .Group("yearmonth") .Order("created desc") .Scan(&val)
-		
+
 // 	return val
 // }
 
@@ -251,4 +240,3 @@ func DocList() []Doc {
 
 // 	return val
 // }
-

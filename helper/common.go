@@ -19,7 +19,6 @@ func GetCurrPath() string {
 	return ret
 }
 
-
 func IsAjax(c *gin.Context) bool {
 	return c.Request.Header.Get("X-Requested-With") == "XMLHttpRequest"
 }

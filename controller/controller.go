@@ -3,33 +3,31 @@ package controller
 import (
 	"github.com/gin-gonic/gin"
 
-	"app/module"
 	"app/helper"
-
+	"app/module"
 	// "html/template"
 	// "fmt"
 	// "strings"
 	// "strconv"
 )
 
-
 func UserList(c *gin.Context) {
 
 	if helper.IsAjax(c) {
 
 		c.JSON(200, gin.H{
-			"code": 0,
-			"msg": "",
+			"code":  0,
+			"msg":   "",
 			"count": 10,
-			"data": module.UserList(),
+			"data":  module.UserList(),
 		})
 
 	} else {
 
 		c.HTML(200, "user/index.html", gin.H{
-	    	"controller": "user",
-			"action": "index",
-	    })
+			"controller": "user",
+			"action":     "index",
+		})
 	}
 }
 
@@ -37,29 +35,33 @@ func TaskList(c *gin.Context) {
 	if helper.IsAjax(c) {
 
 		c.JSON(200, gin.H{
-			"code": 0,
-			"msg": "",
+			"code":  0,
+			"msg":   "",
 			"count": 10,
-			"data": module.TaskList(),
+			"data":  module.TaskList(),
 		})
 
 	} else {
 
 		c.HTML(200, "task/index.html", gin.H{
-	    	"controller": "task",
-			"action": "index",
-	    })	
+			"controller": "task",
+			"action":     "index",
+		})
 	}
 }
 
-
 func TaskEdit(c *gin.Context) {
 	var taskId = c.Query("id")
+	var json module.Task
 
-	module.TaskEdit(taskId)
+	if err := c.ShouldBind(&json); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	module.TaskEdit(taskId,  json)
 
 }
-
 
 func TaskModify(c *gin.Context) {
 	var status = c.PostForm("status")
@@ -68,48 +70,45 @@ func TaskModify(c *gin.Context) {
 	module.TaskModify(taskId, status)
 
 	c.JSON(200, gin.H{
-		"code": 1,
-		"msg": "",
+		"code":  1,
+		"msg":   "",
 		"count": 0,
-		"data": "",
+		"data":  "",
 	})
 }
-
 
 func DocList(c *gin.Context) {
 	if helper.IsAjax(c) {
 
 		c.JSON(200, gin.H{
-			"code": 0,
-			"msg": "",
+			"code":  0,
+			"msg":   "",
 			"count": 10,
-			"data": module.DocList(),
+			"data":  module.DocList(),
 		})
 
 	} else {
 
 		c.HTML(200, "doc/index.html", gin.H{
-	    	"controller": "doc",
-			"action": "index",
-	    })	
+			"controller": "doc",
+			"action":     "index",
+		})
 	}
 }
 
-
 func CardList(c *gin.Context) {
 	c.HTML(200, "task/card.html", gin.H{
-    	"controller": "task",
-		"action": "card",
-		"data": module.TaskList(),
-    })
+		"controller": "task",
+		"action":     "card",
+		"data":       module.TaskList(),
+	})
 }
-
 
 func Calendar(c *gin.Context) {
 	c.HTML(200, "task/calendar.html", gin.H{
-    	"controller": "task",
-		"action": "card",
-    })
+		"controller": "task",
+		"action":     "card",
+	})
 }
 
 // func Index(c *gin.Context) {
@@ -144,7 +143,6 @@ func Calendar(c *gin.Context) {
 // 		"Archive": module.Archive(),
 // 	})
 // }
-
 
 // func Category (c *gin.Context) {
 // 	var url string = c.Param("name")
@@ -218,11 +216,10 @@ func Calendar(c *gin.Context) {
 // 	})
 // }
 
-
 // func Article(c *gin.Context) {
 
 // 	var url string = c.Param("url")
-	
+
 // 	url = strings.TrimSuffix(url, ".html")
 
 // 	c.HTML(200, "article.html", gin.H{
@@ -234,11 +231,10 @@ func Calendar(c *gin.Context) {
 // 	})
 // }
 
-
 // func Page(c *gin.Context) {
 
 // 	var url string = c.FullPath()
-	
+
 // 	url = strings.TrimPrefix(url, "/")
 // 	url = strings.TrimSuffix(url, ".html")
 
@@ -251,11 +247,6 @@ func Calendar(c *gin.Context) {
 // 	})
 // }
 
-
-
 // func NotFound(c *gin.Context) {
 // 	c.HTML(200, "404.html", gin.H{})
 // }
-
-
-

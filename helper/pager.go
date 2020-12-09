@@ -112,7 +112,7 @@ func (p *Pager) showStyle1() string {
 			break
 		}
 		if i == p.NowPage {
-			back += fmt.Sprintf("<li class=\"current\"><a href=\"/page/%d/\">%d</a></li>\n", i,i)
+			back += fmt.Sprintf("<li class=\"current\"><a href=\"/page/%d/\">%d</a></li>\n", i, i)
 		} else {
 			back += p.getLink(i, strconv.Itoa(i))
 		}
