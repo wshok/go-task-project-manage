@@ -133,6 +133,8 @@ func DocList() []Doc {
 func TaskModify(tid int, status string) {
 	if "doing" == status {
 		db.Model(&Task{}).Where("id = ?", tid).Updates(Task{Status:"doing", BeginTime: time.Now().Unix()})
+	} else if "done" == status {
+		db.Model(&Task{}).Where("id = ?", tid).Updates(Task{Status:"done", FinishTime: time.Now().Unix()})	
 	}
 }
 

@@ -80,8 +80,6 @@ define(["jquery", "easy-admin", "dragula"], function ($, ea, dragula) {
                         data: {
                             status: target.id
                         }
-                    }, function (res) {
-                        res.data = res.data || [];
                     }
                 );
 

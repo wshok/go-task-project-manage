@@ -63,6 +63,13 @@ func TaskModify(c *gin.Context) {
 	taskId, _ := strconv.Atoi(c.Param("id"))
 
 	module.TaskModify(taskId, status)
+
+	c.JSON(200, gin.H{
+		"code": 1,
+		"msg": "",
+		"count": 0,
+		"data": "",
+	})
 }
 
 

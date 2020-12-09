@@ -11,21 +11,21 @@
         <div class="layui-card-header"><span class="layui-badge layui-bg-gray">未开始</span></div>
         <div class="layui-card-body drag" id="todo">
           {{ range $k, $v := .data }}
-          {{ if eq $v.Status  "todo" }}
-          <blockquote class="layui-elem-quote" id="{{ $v.Id }}">
-              <div class="layui-row">
-                <div class="layui-col-sm12">
-                  <div class="content">{{ $v.Content }}</div>
-                </div>
-                <div class="layui-col-sm12">
-                  <div class="datetime" style="text-align: right;">
-                    <span class="layui-badge-rim"><i class="layui-icon layui-icon-log"></i> {{ $v.StartTime |timeFormat }} ~ {{ $v.EndTime |timeFormat }}</span>
-                    <span class="layui-badge-rim"><i class="layui-icon layui-icon-at"></i> {{ $v.User.Realname }}</span>
+            {{ if eq $v.Status  "todo" }}
+            <blockquote class="layui-elem-quote" id="{{ $v.Id }}">
+                <div class="layui-row">
+                  <div class="layui-col-sm12">
+                    <div class="content">{{ $v.Content }}</div>
+                  </div>
+                  <div class="layui-col-sm12">
+                    <div class="datetime" style="text-align: right;">
+                      <span class="layui-badge-rim"><i class="layui-icon layui-icon-log"></i> {{ $v.StartTime |timeFormat }} ~ {{ $v.EndTime |timeFormat }}</span>
+                      <span class="layui-badge-rim"><i class="layui-icon layui-icon-at"></i> {{ $v.User.Realname }}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-          </blockquote>
-          {{ end }}
+            </blockquote>
+            {{ end }}
           {{ end }}
         </div>
       </div>
@@ -37,21 +37,21 @@
         <div class="layui-card-body drag" id="doing">
 
           {{ range $k, $v := .data }}
-          {{ if eq $v.Status  "doing" }}
-          <blockquote class="layui-elem-quote" id="{{ $v.Id }}">
-              <div class="layui-row">
-                <div class="layui-col-sm12">
-                  <div class="content">{{ $v.Content }}</div>
-                </div>
-                <div class="layui-col-sm12">
-                  <div class="datetime" style="text-align: right;">
-                    <span class="layui-badge-rim"><i class="layui-icon layui-icon-log"></i> {{ $v.StartTime |timeFormat }} ~ {{ $v.EndTime |timeFormat }}</span>
-                    <span class="layui-badge-rim"><i class="layui-icon layui-icon-at"></i> {{ $v.User.Realname }}</span>
+            {{ if eq $v.Status  "doing" }}
+            <blockquote class="layui-elem-quote" id="{{ $v.Id }}">
+                <div class="layui-row">
+                  <div class="layui-col-sm12">
+                    <div class="content">{{ $v.Content }}</div>
+                  </div>
+                  <div class="layui-col-sm12">
+                    <div class="datetime" style="text-align: right;">
+                      <span class="layui-badge-rim"><i class="layui-icon layui-icon-log"></i> {{ $v.StartTime |timeFormat }} ~ {{ $v.EndTime |timeFormat }}</span>
+                      <span class="layui-badge-rim"><i class="layui-icon layui-icon-at"></i> {{ $v.User.Realname }}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-          </blockquote>
-          {{ end }}
+            </blockquote>
+            {{ end }}
           {{ end }}
 
         </div>
@@ -63,21 +63,21 @@
         <div class="layui-card-header"><span class="layui-badge layui-bg-green">已完成</span></div>
         <div class="layui-card-body drag" id="done">
           {{ range $k, $v := .data }}
-          {{ if eq $v.Status  "done" }}
-          <blockquote class="layui-elem-quote" id="{{ $v.Id }}">
-              <div class="layui-row">
-                <div class="layui-col-sm12">
-                  <div class="content">{{ $v.Content }}</div>
-                </div>
-                <div class="layui-col-sm12">
-                  <div class="datetime" style="text-align: right;">
-                    <span class="layui-badge-rim"><i class="layui-icon layui-icon-log"></i> {{ $v.StartTime |timeFormat }} ~ {{ $v.EndTime |timeFormat }}</span>
-                    <span class="layui-badge-rim"><i class="layui-icon layui-icon-at"></i> {{ $v.User.Realname }}</span>
+            {{ if eq $v.Status  "done" }}
+            <blockquote class="layui-elem-quote" id="{{ $v.Id }}">
+                <div class="layui-row">
+                  <div class="layui-col-sm12">
+                    <div class="content">{{ $v.Content }}</div>
+                  </div>
+                  <div class="layui-col-sm12">
+                    <div class="datetime" style="text-align: right;">
+                      <span class="layui-badge-rim"><i class="layui-icon layui-icon-log"></i> {{ $v.StartTime |timeFormat }} ~ {{ $v.EndTime |timeFormat }}</span>
+                      <span class="layui-badge-rim"><i class="layui-icon layui-icon-at"></i> {{ $v.User.Realname }}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-          </blockquote>
-          {{ end }}
+            </blockquote>
+            {{ end }}
           {{ end }}
         </div>
       </div>
