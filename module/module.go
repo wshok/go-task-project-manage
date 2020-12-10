@@ -77,8 +77,6 @@ func init() {
 
 func opendb() (*gorm.DB, error) {
 
-	// logConfigPath := flag.String("L", "conf/seelog.xml", "log config file path")
-
 	gorm.DefaultTableNameHandler = func(db *gorm.DB, defaultTableName string) string {
 		return "hd_" + defaultTableName
 	}
@@ -98,18 +96,75 @@ func opendb() (*gorm.DB, error) {
 	return db, err
 }
 
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@user
+//
+
 func UserList() []User {
 	var val []User
-
-	// var p Page {
-	// 	Start: (page - 1) * p.ListRows,
-	// 	Size:  p.ListRows,
-	// }
+	// todo  page
 
 	db.Model(&User{}).Order("id desc").Scan(&val)
 
 	return val
 }
+
+func UserAdd(data User) bool {
+
+	db.Create(&data)
+
+	if db.RowsAffected > 0 || db.Error == nil {
+		return true
+	}
+
+	return false
+}
+
+func UserEdit(uid string, data User) int {
+	var user User
+	db.First(&user, uid)
+	if user == (User{}) {
+		return -1
+	}
+
+	db.Model(&User{}).Where("id = ?", uid).Updates(data)
+
+	if db.RowsAffected > 0 || db.Error == nil {
+		return 1
+	}
+
+	return 0
+}
+
+
+func UserInfo(tid string) Task {
+	var task Task
+	db.First(&task, tid)
+
+	return task
+}
+
+func UserDelete(uid string) bool {
+	var user User
+	db.First(&user, uid)
+
+	if user == (User{}) {
+		return false
+	}
+
+	db.Delete(&user)
+
+	if db.RowsAffected > 0 || db.Error == nil {
+		return true
+	}
+
+	return false
+}
+
+
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@task
+//
 
 func TaskList() []Task {
 	var val []Task
@@ -194,6 +249,10 @@ func TaskDelete(tid string) bool {
 }
 
 
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@doc
+//
+
 func DocList() []Doc {
 	var val []Doc
 
@@ -201,6 +260,14 @@ func DocList() []Doc {
 
 	return val
 }
+
+
+
+
+
+
+
+
 
 //
 // func ArticleCount(f *Filter) int {

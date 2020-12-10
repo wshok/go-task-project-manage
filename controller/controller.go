@@ -11,6 +11,11 @@ import (
 	// "strconv"
 )
 
+
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@user
+//
+
 func UserList(c *gin.Context) {
 
 	if helper.IsAjax(c) {
@@ -30,6 +35,109 @@ func UserList(c *gin.Context) {
 		})
 	}
 }
+
+func UserAdd(c *gin.Context) {
+
+	if helper.IsAjax(c) {
+
+		var user module.User
+
+		if err := c.ShouldBind(&user); err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+
+		if module.UserAdd(user) {
+			c.JSON(200, gin.H{
+				"code":  1,
+				"msg":   "添加成功",
+				"data":  "",
+			})
+		} else {
+			c.JSON(200, gin.H{
+				"code":  0,
+				"msg":   "添加失败",
+				"data":  "",
+			})
+		}
+	} else {
+
+		c.HTML(200, "user/add.html", gin.H{
+			"controller": "user",
+			"action":     "add",
+		})
+	}
+}
+
+
+func UserEdit(c *gin.Context) {
+	var uid = c.Query("id")
+
+	if helper.IsAjax(c) {
+		var user module.User
+
+		if err := c.ShouldBind(&user); err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+
+		switch module.UserEdit(uid, user) {
+			case -1: 
+				c.JSON(200, gin.H{
+					"code":  0,
+					"msg":   "记录不存在",
+					"data":  "",
+				})
+			case 0:
+				c.JSON(200, gin.H{
+					"code":  0,
+					"msg":   "修改失败",
+					"data":  "",
+				})
+			case 1:
+				c.JSON(200, gin.H{
+					"code":  1,
+					"msg":   "修改成功",
+					"data":  "",
+				})
+		}
+
+	} else {
+
+		c.HTML(200, "user/edit.html", gin.H{
+			"controller": "user",
+			"action":     "edit",
+			"data": module.UserInfo(uid),
+		})
+	}
+}
+
+
+func UserDelete(c *gin.Context) {
+	var uid = c.Param("id")
+
+	if module.UserDelete(uid) {
+
+		c.JSON(200, gin.H{
+			"code":  1,
+			"msg":   "删除成功",
+			"data":  "",
+		})
+
+	} else {
+
+		c.JSON(200, gin.H{
+			"code":  0,
+			"msg":   "删除失败",
+			"data":  "",
+		})
+	}
+}
+
+
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@task
+//
 
 func TaskList(c *gin.Context) {
 	if helper.IsAjax(c) {
@@ -167,6 +275,12 @@ func TaskDelete(c *gin.Context) {
 		})
 	}
 }
+
+
+
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@doc
+//
 
 func DocList(c *gin.Context) {
 	if helper.IsAjax(c) {

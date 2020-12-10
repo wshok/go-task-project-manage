@@ -44,9 +44,11 @@ func main() {
 	{
 		user.GET("/index", controller.UserList)
 
-		user.Any("/add", func(c *gin.Context) {
-			//
-		})
+		user.Any("/add", controller.UserAdd)
+
+		user.Any("/edit", controller.UserEdit)
+
+		user.POST("/del", controller.UserDelete)
 	}
 
 	task := g.Group("/task")
@@ -61,9 +63,9 @@ func main() {
 
 		task.POST("/modify/:id", controller.TaskModify)
 
-		task.GET("/calendar", controller.Calendar)
-
 		task.GET("/card", controller.CardList)
+
+		task.GET("/calendar", controller.Calendar)
 	}
 
 	doc := g.Group("/doc")
