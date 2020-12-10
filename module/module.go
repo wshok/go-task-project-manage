@@ -17,8 +17,16 @@ type Page struct {
 	Size   int
 }
 
+type Model struct {
+  Id       uint  `json:"id" gorm:"primary_key,AUTO_INCREMENT"`
+  CreatedAt time.Time
+  UpdatedAt time.Time
+  DeletedAt *time.Time
+}
+
 type User struct {
-	Id         int    `json:"id"`
+	gorm.Model
+
 	Username   string `json:"username,omitempty"`
 	Realname   string `json:"realname,omitempty"`
 	Password   string `json:"password,omitempty"`
@@ -28,25 +36,21 @@ type User struct {
 	Gender     int    `json:"gender,omitempty"`
 	Department string `json:"department,omitempty"`
 	Role       int    `json:"role,omitempty"`
-	CreateTime int64  `json:"create_time,omitempty"`
-	UpdateTime int64  `json:"update_time,omitempty"`
-	DeleteTime int64  `json:"delete_time,omitempty"`
 }
 
 type Doc struct {
-	Id         int    `json:"id"`
+	gorm.Model
+
 	Title      string `json:"title,omitempty"`
 	Content    string `json:"content,omitempty"`
 	Category   string `json:"category,omitempty"`
 	Uid        int    `json:"uid,omitempty"`
 	User       User   `gorm:"ForeignKey:Uid;AssociationForeignKey:id"`
-	CreateTime int64  `json:"create_time,omitempty"`
-	UpdateTime int64  `json:"update_time,omitempty"`
-	DeleteTime int64  `json:"delete_time,omitempty"`
 }
 
 type Task struct {
-	Id         int    `json:"id"`
+	gorm.Model
+
 	Title      string `form:"title" json:"title,omitempty" binding:"required"`
 	Content    string `form:"content" json:"content,omitempty" binding:"required"`
 	Uid        string `form:"uid" json:"uid,omitempty" binding:"required"`
@@ -56,13 +60,10 @@ type Task struct {
 	Project    string `form:"project" json:"project,omitempty" binding:"required"`
 	Type       string `form:"type" json:"type,omitempty" binding:"required"`
 	Accessory  string `form:"accessory" json:"accessory,omitempty"`
-	StartTime  int64  `form:"start_time" json:"start_time,omitempty" binding:"required"`
-	EndTime    int64  `form:"end_time" json:"end_time,omitempty" binding:"required"`
-	BeginTime  int64  `json:"begin_time,omitempty"`
-	FinishTime int64  `json:"finish_time,omitempty"`
-	CreateTime int64  `json:"create_time,omitempty"`
-	UpdateTime int64  `json:"update_time,omitempty"`
-	DeleteTime int64  `json:"delete_time,omitempty"`
+	StartTime  time.Time  `form:"start_time" json:"start_time,omitempty" binding:"required"`
+	EndTime    time.Time  `form:"end_time" json:"end_time,omitempty" binding:"required"`
+	BeginTime  time.Time  `json:"begin_time,omitempty"`
+	FinishTime time.Time  `json:"finish_time,omitempty"`
 }
 
 var (
@@ -89,6 +90,9 @@ func opendb() (*gorm.DB, error) {
 
 	db.SingularTable(true) // 禁用表名复数
 
+	// db.DropTable(&Task{})
+	// db.AutoMigrate(&Task{})
+
 	// defer db.Close()
 
 	return db, err
@@ -102,7 +106,7 @@ func UserList() []User {
 	// 	Size:  p.ListRows,
 	// }
 
-	db.Model(&User{}).Where("delete_time = 0").Order("id desc").Scan(&val)
+	db.Model(&User{}).Order("id desc").Scan(&val)
 
 	return val
 }
@@ -110,20 +114,28 @@ func UserList() []User {
 func TaskList() []Task {
 	var val []Task
 
-	db.Model(&Task{}).Where("delete_time = 0").Order("id desc").Preload("User").Find(&val)
+	db.Model(&Task{}).Order("id desc").Preload("User").Find(&val)
 
 	return val
+}
+
+func TaskAdd(data Task) bool {
+
+	db.Create(&data)
+
+	if db.RowsAffected > 0 || db.Error == nil {
+		return true
+	}
+
+	return false
 }
 
 func TaskEdit(tid string, data Task) int {
 	var task Task
 	db.First(&task, tid)
-
 	if task == (Task{}) {
 		return -1
 	}
-
-	data.UpdateTime = time.Now().Unix()
 
 	db.Model(&Task{}).Where("id = ?", tid).Updates(data)
 
@@ -132,6 +144,13 @@ func TaskEdit(tid string, data Task) int {
 	}
 
 	return 0
+}
+
+func TaskInfo(tid string) Task {
+	var task Task
+	db.First(&task, tid)
+
+	return task
 }
 
 func TaskModify(tid, status string) bool {
@@ -143,10 +162,10 @@ func TaskModify(tid, status string) bool {
 	}
 
 	if "doing" == status {
-		var data = Task{Status: "doing", BeginTime: time.Now().Unix(), UpdateTime:time.Now().Unix()}
+		var data = Task{Status: "doing", BeginTime: time.Now()}
 		db.Model(&Task{}).Where("id = ?", tid).Updates(data)
 	} else if "done" == status {
-		var data = Task{Status: "done", FinishTime: time.Now().Unix(), UpdateTime:time.Now().Unix()}
+		var data = Task{Status: "done", FinishTime: time.Now()}
 		db.Model(&Task{}).Where("id = ?", tid).Updates(data)
 	}
 
@@ -160,7 +179,7 @@ func TaskModify(tid, status string) bool {
 func DocList() []Doc {
 	var val []Doc
 
-	db.Model(&Doc{}).Where("delete_time = 0").Order("id desc").Preload("User").Find(&val)
+	db.Model(&Doc{}).Order("id desc").Preload("User").Find(&val)
 
 	return val
 }

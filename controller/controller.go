@@ -50,34 +50,78 @@ func TaskList(c *gin.Context) {
 	}
 }
 
-func TaskEdit(c *gin.Context) {
-	var taskId = c.Query("id")
-	var json module.Task
+func TaskAdd(c *gin.Context) {
 
-	if err := c.ShouldBind(&json); err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
+	if helper.IsAjax(c) {
 
-	switch module.TaskEdit(taskId,  json) {
-		case -1: 
-			c.JSON(200, gin.H{
-				"code":  0,
-				"msg":   "记录不存在",
-				"data":  "",
-			})
-		case 0:
-			c.JSON(200, gin.H{
-				"code":  0,
-				"msg":   "修改失败",
-				"data":  "",
-			})
-		case 1:
+		var task module.Task
+
+		if err := c.ShouldBind(&task); err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+
+		if module.TaskAdd(task) {
 			c.JSON(200, gin.H{
 				"code":  1,
-				"msg":   "修改成功",
+				"msg":   "添加成功",
 				"data":  "",
 			})
+		} else {
+			c.JSON(200, gin.H{
+				"code":  0,
+				"msg":   "添加失败",
+				"data":  "",
+			})
+		}
+	} else {
+
+		c.HTML(200, "task/add.html", gin.H{
+			"controller": "task",
+			"action":     "add",
+		})
+	}
+}
+
+func TaskEdit(c *gin.Context) {
+	var taskId = c.Query("id")
+
+	if helper.IsAjax(c) {
+		var task module.Task
+
+		if err := c.ShouldBind(&task); err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+
+		switch module.TaskEdit(taskId, task) {
+			case -1: 
+				c.JSON(200, gin.H{
+					"code":  0,
+					"msg":   "记录不存在",
+					"data":  "",
+				})
+			case 0:
+				c.JSON(200, gin.H{
+					"code":  0,
+					"msg":   "修改失败",
+					"data":  "",
+				})
+			case 1:
+				c.JSON(200, gin.H{
+					"code":  1,
+					"msg":   "修改成功",
+					"data":  "",
+				})
+		}
+
+	} else {
+
+		c.HTML(200, "task/edit.html", gin.H{
+			"controller": "task",
+			"action":     "edit",
+			"data": module.TaskInfo(taskId),
+		})
 	}
 }
 
@@ -86,20 +130,21 @@ func TaskModify(c *gin.Context) {
 	var taskId = c.Param("id")
 
 	if module.TaskModify(taskId, status) {
+
 		c.JSON(200, gin.H{
 			"code":  1,
 			"msg":   "修改成功",
 			"data":  "",
 		})
+
 	} else {
+
 		c.JSON(200, gin.H{
 			"code":  0,
 			"msg":   "修改失败",
 			"data":  "",
 		})
 	}
-
-	
 }
 
 func DocList(c *gin.Context) {

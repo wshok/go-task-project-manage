@@ -53,12 +53,7 @@ func main() {
 	{
 		task.GET("/index", controller.TaskList)
 
-		task.GET("/add", func(c *gin.Context) {
-			c.HTML(200, "task/add.html", gin.H{
-				"controller": "task",
-				"action":     "add",
-			})
-		})
+		task.Any("/add", controller.TaskAdd)
 
 		task.Any("/edit", controller.TaskEdit)
 
