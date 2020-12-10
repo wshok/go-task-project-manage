@@ -1,7 +1,7 @@
 package module
 
 import (
-	"fmt"
+	// "fmt"
 	// "flag"
 	"time"
 	// "strconv"
@@ -123,17 +123,31 @@ func TaskEdit(tid string, data Task) int {
 		return -1
 	}
 
-	fmt.Printf("%#v", data)
+	data.UpdateTime = time.Now().Unix()
 
-	return 1
-	// fmt.Printf("%#v", task)
+	db.Model(&Task{}).Where("id = ?", tid).Updates(data)
+
+	if db.RowsAffected > 0 || db.Error == nil {
+		return 1
+	}
+
+	return 0
 }
 
 func TaskModify(tid, status string) bool {
+	var task Task
+	db.First(&task, tid)
+
+	if task == (Task{}) {
+		return false
+	}
+
 	if "doing" == status {
-		db.Model(&Task{}).Where("id = ?", tid).Updates(Task{Status: "doing", BeginTime: time.Now().Unix()})
+		var data = Task{Status: "doing", BeginTime: time.Now().Unix(), UpdateTime:time.Now().Unix()}
+		db.Model(&Task{}).Where("id = ?", tid).Updates(data)
 	} else if "done" == status {
-		db.Model(&Task{}).Where("id = ?", tid).Updates(Task{Status: "done", FinishTime: time.Now().Unix()})
+		var data = Task{Status: "done", FinishTime: time.Now().Unix(), UpdateTime:time.Now().Unix()}
+		db.Model(&Task{}).Where("id = ?", tid).Updates(data)
 	}
 
 	if db.RowsAffected > 0 || db.Error == nil {

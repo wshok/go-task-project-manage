@@ -59,22 +59,47 @@ func TaskEdit(c *gin.Context) {
 		return
 	}
 
-	module.TaskEdit(taskId,  json)
-
+	switch module.TaskEdit(taskId,  json) {
+		case -1: 
+			c.JSON(200, gin.H{
+				"code":  0,
+				"msg":   "记录不存在",
+				"data":  "",
+			})
+		case 0:
+			c.JSON(200, gin.H{
+				"code":  0,
+				"msg":   "修改失败",
+				"data":  "",
+			})
+		case 1:
+			c.JSON(200, gin.H{
+				"code":  1,
+				"msg":   "修改成功",
+				"data":  "",
+			})
+	}
 }
 
 func TaskModify(c *gin.Context) {
 	var status = c.PostForm("status")
 	var taskId = c.Param("id")
 
-	module.TaskModify(taskId, status)
+	if module.TaskModify(taskId, status) {
+		c.JSON(200, gin.H{
+			"code":  1,
+			"msg":   "修改成功",
+			"data":  "",
+		})
+	} else {
+		c.JSON(200, gin.H{
+			"code":  0,
+			"msg":   "修改失败",
+			"data":  "",
+		})
+	}
 
-	c.JSON(200, gin.H{
-		"code":  1,
-		"msg":   "",
-		"count": 0,
-		"data":  "",
-	})
+	
 }
 
 func DocList(c *gin.Context) {
