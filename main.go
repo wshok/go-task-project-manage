@@ -57,6 +57,8 @@ func main() {
 
 		task.Any("/edit", controller.TaskEdit)
 
+		task.POST("/del", controller.TaskDelete)
+
 		task.POST("/modify/:id", controller.TaskModify)
 
 		task.GET("/calendar", controller.Calendar)

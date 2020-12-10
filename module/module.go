@@ -35,7 +35,7 @@ type User struct {
 	Qq         string `json:"qq,omitempty"`
 	Gender     int    `json:"gender,omitempty"`
 	Department string `json:"department,omitempty"`
-	Role       int    `json:"role,omitempty"`
+	Role       string `json:"role,omitempty"`
 }
 
 type Doc struct {
@@ -90,8 +90,8 @@ func opendb() (*gorm.DB, error) {
 
 	db.SingularTable(true) // 禁用表名复数
 
-	// db.DropTable(&Task{})
-	// db.AutoMigrate(&Task{})
+	// db.DropTable(&User{})
+	// db.AutoMigrate(&User{})
 
 	// defer db.Close()
 
@@ -175,6 +175,24 @@ func TaskModify(tid, status string) bool {
 
 	return false
 }
+
+func TaskDelete(tid string) bool {
+	var task Task
+	db.First(&task, tid)
+
+	if task == (Task{}) {
+		return false
+	}
+
+	db.Delete(&task)
+
+	if db.RowsAffected > 0 || db.Error == nil {
+		return true
+	}
+
+	return false
+}
+
 
 func DocList() []Doc {
 	var val []Doc

@@ -147,6 +147,27 @@ func TaskModify(c *gin.Context) {
 	}
 }
 
+func TaskDelete(c *gin.Context) {
+	var taskId = c.Param("id")
+
+	if module.TaskDelete(taskId) {
+
+		c.JSON(200, gin.H{
+			"code":  1,
+			"msg":   "删除成功",
+			"data":  "",
+		})
+
+	} else {
+
+		c.JSON(200, gin.H{
+			"code":  0,
+			"msg":   "删除失败",
+			"data":  "",
+		})
+	}
+}
+
 func DocList(c *gin.Context) {
 	if helper.IsAjax(c) {
 
