@@ -11,7 +11,6 @@ import (
 	// "strconv"
 )
 
-
 //
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@user
 //
@@ -49,15 +48,15 @@ func UserAdd(c *gin.Context) {
 
 		if module.UserAdd(user) {
 			c.JSON(200, gin.H{
-				"code":  1,
-				"msg":   "添加成功",
-				"data":  "",
+				"code": 1,
+				"msg":  "添加成功",
+				"data": "",
 			})
 		} else {
 			c.JSON(200, gin.H{
-				"code":  0,
-				"msg":   "添加失败",
-				"data":  "",
+				"code": 0,
+				"msg":  "添加失败",
+				"data": "",
 			})
 		}
 	} else {
@@ -68,7 +67,6 @@ func UserAdd(c *gin.Context) {
 		})
 	}
 }
-
 
 func UserEdit(c *gin.Context) {
 	var uid = c.Query("id")
@@ -82,24 +80,24 @@ func UserEdit(c *gin.Context) {
 		}
 
 		switch module.UserEdit(uid, user) {
-			case -1: 
-				c.JSON(200, gin.H{
-					"code":  0,
-					"msg":   "记录不存在",
-					"data":  "",
-				})
-			case 0:
-				c.JSON(200, gin.H{
-					"code":  0,
-					"msg":   "修改失败",
-					"data":  "",
-				})
-			case 1:
-				c.JSON(200, gin.H{
-					"code":  1,
-					"msg":   "修改成功",
-					"data":  "",
-				})
+		case -1:
+			c.JSON(200, gin.H{
+				"code": 0,
+				"msg":  "记录不存在",
+				"data": "",
+			})
+		case 0:
+			c.JSON(200, gin.H{
+				"code": 0,
+				"msg":  "修改失败",
+				"data": "",
+			})
+		case 1:
+			c.JSON(200, gin.H{
+				"code": 1,
+				"msg":  "修改成功",
+				"data": "",
+			})
 		}
 
 	} else {
@@ -107,11 +105,10 @@ func UserEdit(c *gin.Context) {
 		c.HTML(200, "user/edit.html", gin.H{
 			"controller": "user",
 			"action":     "edit",
-			"data": module.UserInfo(uid),
+			"data":       module.UserInfo(uid),
 		})
 	}
 }
-
 
 func UserDelete(c *gin.Context) {
 	var uid = c.Param("id")
@@ -119,21 +116,20 @@ func UserDelete(c *gin.Context) {
 	if module.UserDelete(uid) {
 
 		c.JSON(200, gin.H{
-			"code":  1,
-			"msg":   "删除成功",
-			"data":  "",
+			"code": 1,
+			"msg":  "删除成功",
+			"data": "",
 		})
 
 	} else {
 
 		c.JSON(200, gin.H{
-			"code":  0,
-			"msg":   "删除失败",
-			"data":  "",
+			"code": 0,
+			"msg":  "删除失败",
+			"data": "",
 		})
 	}
 }
-
 
 //
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@task
@@ -171,15 +167,15 @@ func TaskAdd(c *gin.Context) {
 
 		if module.TaskAdd(task) {
 			c.JSON(200, gin.H{
-				"code":  1,
-				"msg":   "添加成功",
-				"data":  "",
+				"code": 1,
+				"msg":  "添加成功",
+				"data": "",
 			})
 		} else {
 			c.JSON(200, gin.H{
-				"code":  0,
-				"msg":   "添加失败",
-				"data":  "",
+				"code": 0,
+				"msg":  "添加失败",
+				"data": "",
 			})
 		}
 	} else {
@@ -203,24 +199,24 @@ func TaskEdit(c *gin.Context) {
 		}
 
 		switch module.TaskEdit(taskId, task) {
-			case -1: 
-				c.JSON(200, gin.H{
-					"code":  0,
-					"msg":   "记录不存在",
-					"data":  "",
-				})
-			case 0:
-				c.JSON(200, gin.H{
-					"code":  0,
-					"msg":   "修改失败",
-					"data":  "",
-				})
-			case 1:
-				c.JSON(200, gin.H{
-					"code":  1,
-					"msg":   "修改成功",
-					"data":  "",
-				})
+		case -1:
+			c.JSON(200, gin.H{
+				"code": 0,
+				"msg":  "记录不存在",
+				"data": "",
+			})
+		case 0:
+			c.JSON(200, gin.H{
+				"code": 0,
+				"msg":  "修改失败",
+				"data": "",
+			})
+		case 1:
+			c.JSON(200, gin.H{
+				"code": 1,
+				"msg":  "修改成功",
+				"data": "",
+			})
 		}
 
 	} else {
@@ -228,7 +224,7 @@ func TaskEdit(c *gin.Context) {
 		c.HTML(200, "task/edit.html", gin.H{
 			"controller": "task",
 			"action":     "edit",
-			"data": module.TaskInfo(taskId),
+			"data":       module.TaskInfo(taskId),
 		})
 	}
 }
@@ -240,17 +236,17 @@ func TaskModify(c *gin.Context) {
 	if module.TaskModify(taskId, status) {
 
 		c.JSON(200, gin.H{
-			"code":  1,
-			"msg":   "修改成功",
-			"data":  "",
+			"code": 1,
+			"msg":  "修改成功",
+			"data": "",
 		})
 
 	} else {
 
 		c.JSON(200, gin.H{
-			"code":  0,
-			"msg":   "修改失败",
-			"data":  "",
+			"code": 0,
+			"msg":  "修改失败",
+			"data": "",
 		})
 	}
 }
@@ -261,21 +257,20 @@ func TaskDelete(c *gin.Context) {
 	if module.TaskDelete(taskId) {
 
 		c.JSON(200, gin.H{
-			"code":  1,
-			"msg":   "删除成功",
-			"data":  "",
+			"code": 1,
+			"msg":  "删除成功",
+			"data": "",
 		})
 
 	} else {
 
 		c.JSON(200, gin.H{
-			"code":  0,
-			"msg":   "删除失败",
-			"data":  "",
+			"code": 0,
+			"msg":  "删除失败",
+			"data": "",
 		})
 	}
 }
-
 
 func CardList(c *gin.Context) {
 	c.HTML(200, "task/card.html", gin.H{
@@ -291,7 +286,6 @@ func Calendar(c *gin.Context) {
 		"action":     "card",
 	})
 }
-
 
 //
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@doc
@@ -329,15 +323,15 @@ func DocAdd(c *gin.Context) {
 
 		if module.DocAdd(doc) {
 			c.JSON(200, gin.H{
-				"code":  1,
-				"msg":   "添加成功",
-				"data":  "",
+				"code": 1,
+				"msg":  "添加成功",
+				"data": "",
 			})
 		} else {
 			c.JSON(200, gin.H{
-				"code":  0,
-				"msg":   "添加失败",
-				"data":  "",
+				"code": 0,
+				"msg":  "添加失败",
+				"data": "",
 			})
 		}
 	} else {
@@ -348,7 +342,6 @@ func DocAdd(c *gin.Context) {
 		})
 	}
 }
-
 
 func DocEdit(c *gin.Context) {
 	var id = c.Query("id")
@@ -362,24 +355,24 @@ func DocEdit(c *gin.Context) {
 		}
 
 		switch module.DocEdit(id, doc) {
-			case -1: 
-				c.JSON(200, gin.H{
-					"code":  0,
-					"msg":   "记录不存在",
-					"data":  "",
-				})
-			case 0:
-				c.JSON(200, gin.H{
-					"code":  0,
-					"msg":   "修改失败",
-					"data":  "",
-				})
-			case 1:
-				c.JSON(200, gin.H{
-					"code":  1,
-					"msg":   "修改成功",
-					"data":  "",
-				})
+		case -1:
+			c.JSON(200, gin.H{
+				"code": 0,
+				"msg":  "记录不存在",
+				"data": "",
+			})
+		case 0:
+			c.JSON(200, gin.H{
+				"code": 0,
+				"msg":  "修改失败",
+				"data": "",
+			})
+		case 1:
+			c.JSON(200, gin.H{
+				"code": 1,
+				"msg":  "修改成功",
+				"data": "",
+			})
 		}
 
 	} else {
@@ -387,11 +380,10 @@ func DocEdit(c *gin.Context) {
 		c.HTML(200, "doc/edit.html", gin.H{
 			"controller": "doc",
 			"action":     "edit",
-			"data": module.DocInfo(id),
+			"data":       module.DocInfo(id),
 		})
 	}
 }
-
 
 func DocDelete(c *gin.Context) {
 	var id = c.Param("id")
@@ -399,22 +391,20 @@ func DocDelete(c *gin.Context) {
 	if module.DocDelete(id) {
 
 		c.JSON(200, gin.H{
-			"code":  1,
-			"msg":   "删除成功",
-			"data":  "",
+			"code": 1,
+			"msg":  "删除成功",
+			"data": "",
 		})
 
 	} else {
 
 		c.JSON(200, gin.H{
-			"code":  0,
-			"msg":   "删除失败",
-			"data":  "",
+			"code": 0,
+			"msg":  "删除失败",
+			"data": "",
 		})
 	}
 }
-
-
 
 // func Index(c *gin.Context) {
 

@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"path/filepath"
 	"html/template"
+	"path/filepath"
 
 	"app/controller"
 	"app/helper"
@@ -24,7 +24,6 @@ func main() {
 	g.Static("/static", filepath.Join("", "./static"))
 	g.Static("/plugs", filepath.Join("", "./static/plugs"))
 	g.Static("/api", filepath.Join("", "./api"))
-
 
 	g.GET("/", func(c *gin.Context) {
 		c.HTML(200, "index/index.html", gin.H{
