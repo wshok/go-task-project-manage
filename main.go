@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"path/filepath"
-	// "os"
 	"html/template"
 
 	"app/controller"
@@ -25,6 +24,7 @@ func main() {
 	g.Static("/static", filepath.Join("", "./static"))
 	g.Static("/plugs", filepath.Join("", "./static/plugs"))
 	g.Static("/api", filepath.Join("", "./api"))
+
 
 	g.GET("/", func(c *gin.Context) {
 		c.HTML(200, "index/index.html", gin.H{
@@ -65,19 +65,18 @@ func main() {
 
 		task.GET("/card", controller.CardList)
 
-		task.GET("/calendar", controller.Calendar)
+		task.GET("/calendar", controller.Calendar) // todo
 	}
 
 	doc := g.Group("/doc")
 	{
 		doc.GET("/index", controller.DocList)
 
-		doc.GET("/add", func(c *gin.Context) {
-			c.HTML(200, "doc/add.html", gin.H{
-				"controller": "doc",
-				"action":     "add",
-			})
-		})
+		doc.GET("/add", controller.DocAdd)
+
+		doc.Any("/edit", controller.DocEdit)
+
+		doc.POST("/del", controller.DocDelete)
 	}
 
 	g.Run(":8090")
@@ -87,12 +86,6 @@ func main() {
 // department/doc-category/task-type :: direct save chineses-name, can add.
 // task-status: todo/doing/done
 //
-// func fileExists(fpath string) bool {
-// 	if _, err := os.Stat(fpath); err == nil {
-// 		return true
-// 	}
-// 	return false
-// }
 
 var helperFuncs = template.FuncMap{
 	"jsExists": func(fpath string) bool {

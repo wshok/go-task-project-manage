@@ -261,7 +261,57 @@ func DocList() []Doc {
 	return val
 }
 
+func DocAdd(data Doc) bool {
 
+	db.Create(&data)
+
+	if db.RowsAffected > 0 || db.Error == nil {
+		return true
+	}
+
+	return false
+}
+
+func DocEdit(id string, data Doc) int {
+	var doc Doc
+	db.First(&doc, id)
+	if doc == (Doc{}) {
+		return -1
+	}
+
+	db.Model(&Doc{}).Where("id = ?", id).Updates(data)
+
+	if db.RowsAffected > 0 || db.Error == nil {
+		return 1
+	}
+
+	return 0
+}
+
+
+func DocInfo(id string) Doc {
+	var doc Doc
+	db.First(&doc, id)
+
+	return doc
+}
+
+func DocDelete(id string) bool {
+	var doc Doc
+	db.First(&doc, id)
+
+	if doc == (Doc{}) {
+		return false
+	}
+
+	db.Delete(&doc)
+
+	if db.RowsAffected > 0 || db.Error == nil {
+		return true
+	}
+
+	return false
+}
 
 
 
