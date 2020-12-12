@@ -57,8 +57,10 @@
   <script src="/static/plugs/tui-calendar/schedules.js"></script>
 
   <script type="text/javascript">
-  var cal = new tui.Calendar('#calendar', {
-    defaultView: 'month'
+   var cal = new tui.Calendar('#calendar', {
+    defaultView: 'month', // set 'week' or 'day'
+    taskView: ['task'],  // e.g. true, false, or ['task', 'milestone']
+    scheduleView: false // e.g. true, false, or ['allday', 'time']
   });
   </script>
 
