@@ -61,7 +61,7 @@ function generateTime(schedule, renderStart, renderEnd) {
     schedule.start = startDate.toDate();
 
     endDate = moment(startDate);
-    endDate.add(chance.integer({min: 0, max: 3}), 'days');
+    endDate.add(chance.integer({min: 1, max: 3}), 'days');
 
     schedule.end = endDate.toDate();
 }
@@ -78,7 +78,7 @@ function generateRandomSchedule(renderStart, renderEnd) {
     generateTime(schedule, renderStart, renderEnd);
 
     schedule.attendees = ['zhangsan'];
-    schedule.state = chance.bool({likelihood: 20}) ? 'Free' : 'Busy';
+    schedule.state = chance.bool({likelihood: 30}) ? 1 : 2;
 
     schedule.calendarId = calendar.id;
     schedule.color = calendar.color;

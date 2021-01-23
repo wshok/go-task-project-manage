@@ -57,10 +57,91 @@
   <script src="/static/plugs/tui-calendar/schedules.js"></script>
 
   <script type="text/javascript">
-   var cal = new tui.Calendar('#calendar', {
+    var templates = {
+        milestoneTitle: function() {
+            return 'Milestone';
+        },
+        task: function(schedule) {
+            return '&nbsp;&nbsp;#' + schedule.title;
+        },
+        taskTitle: function() {
+            return '<label><input type="checkbox" />Task</label>';
+        },
+        allday: function(schedule) {
+            return schedule.title + ' <i class="fa fa-refresh"></i>';
+        },
+        alldayTitle: function() {
+            return 'All Day';
+        },
+        time: function(schedule) {
+            return schedule.title + ' <i class="fa fa-refresh"></i>' + schedule.start;
+        },
+        monthMoreTitleDate: function(date) {
+            date = new Date(date);
+            return tui.util.formatDate('MM-DD', date) + '(' + daynames[date.getDay()] + ')';
+        },
+        monthMoreClose: function() {
+            return '<i class="fa fa-close"></i>';
+        },
+        monthGridHeaderExceed: function(hiddenSchedules) {
+            return '<span class="calendar-more-schedules">+' + hiddenSchedules + '</span>';
+        },
+        monthGridFooterExceed: function(hiddenSchedules) {
+            return '<span class="calendar-footer-more-schedules">+ See ' + hiddenSchedules + ' more events</span>';
+        },
+        weekDayname: function(dayname) {
+            return '<span class="calendar-week-dayname-name">' + dayname.dayName + '</span><br><span class="calendar-week-dayname-date">' + dayname.date + '</span>';
+        },
+        monthDayname: function(dayname) {
+            return '<span class="calendar-week-dayname-name">' + dayname.label + '</span>';
+        },
+        timegridDisplayPrimaryTime: function(time) {
+            var meridiem = time.hour < 12 ? 'am' : 'pm';
+
+            return time.hour + ' ' + meridiem;
+        },
+        timegridDisplayTime: function(time) {
+            return time.hour + ':' + time.minutes;
+        },
+        goingDuration: function(model) {
+            var goingDuration = model.goingDuration;
+            var hour = parseInt(goingDuration / SIXTY_MINUTES, 10);
+            var minutes = goingDuration % SIXTY_MINUTES;
+
+            return 'GoingTime ' + hour + ':' + minutes;
+        },
+        comingDuration: function(model) {
+            var goingDuration = model.goingDuration;
+            var hour = parseInt(goingDuration / SIXTY_MINUTES, 10);
+            var minutes = goingDuration % SIXTY_MINUTES;
+
+            return 'ComingTime ' + hour + ':' + minutes;
+        },
+        popupDetailRepeat: function(model) {
+            return model.recurrenceRule;
+        },
+        popupDetailBody: function(model) {
+            return model.body;
+        },
+        popupDetailState: function(schedule) {
+            if (schedule.state == 1) {
+              return '状态 : <strong style="color:#FF9900;">进行中</strong>';  
+            } else if (schedule.state == 2) {
+              return '状态 : <strong style="color:#00f;">已完成</strong>';  
+            } else {
+              return '状态 : <strong>未开始</strong>';  
+            }
+        }
+    };
+
+  var cal = new tui.Calendar('#calendar', {
     defaultView: 'month', // set 'week' or 'day'
-    taskView: ['task'],  // e.g. true, false, or ['task', 'milestone']
-    scheduleView: false // e.g. true, false, or ['allday', 'time']
+    taskView: false,  // e.g. true, false, or ['task', 'milestone']
+    scheduleView: false, // e.g. true, false, or ['allday', 'time']
+
+    template: templates,
+    useCreationPopup: false,
+    useDetailPopup: true
   });
   </script>
 
