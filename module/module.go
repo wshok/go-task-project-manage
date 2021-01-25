@@ -1,7 +1,7 @@
 package module
 
 import (
-	// "fmt"
+	"fmt"
 	// "flag"
 	"time"
 	// "strconv"
@@ -17,40 +17,44 @@ type Page struct {
 	Size   int
 }
 
-type Model struct {
-	Id        uint `json:"id" gorm:"primary_key,AUTO_INCREMENT"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt *time.Time
-}
+// type Model struct {
+// 	Id        uint `gorm:"column:id"`
+// 	CreatedAt time.Time `json:"create_at,omitempty"`
+// 	UpdatedAt time.Time `json:"update_at,omitempty"`
+// 	DeletedAt time.Time `json:"delete_at,omitempty"`
+// }
 
 type User struct {
-	gorm.Model
-
-	Username   string `json:"username,omitempty"`
-	Realname   string `json:"realname,omitempty"`
-	Password   string `json:"password,omitempty"`
-	Email      string `json:"email,omitempty"`
-	Phone      string `json:"phone,omitempty"`
-	Qq         string `json:"qq,omitempty"`
-	Gender     int    `json:"gender,omitempty"`
-	Department string `json:"department,omitempty"`
-	Role       string `json:"role,omitempty"`
+	Id        uint `json:"id" gorm:"primary_key,AUTO_INCREMENT"`
+	Username   string `form:"username" json:"username"`
+	Realname   string `form:"realname" json:"realname"`
+	Password   string `form:"password" json:"password"`
+	Email      string `form:"email" json:"email"`
+	Phone      string `form:"phone" json:"phone"`
+	Qq         string `form:"qq" json:"qq"`
+	Gender     int    `form:"gender" json:"gender"`
+	Department string `form:"department" json:"department"`
+	Role       string `form:"role" json:"role"`
+	Remark     string `form:"remark" json:"remark"`
+	CreatedAt int64 `json:"created_at"`
+	UpdatedAt int64 `json:"updated_at"`
+	DeletedAt *time.Time `json:"deleted_at"`
 }
 
 type Doc struct {
-	gorm.Model
-
+	Id        int64 `json:"id,omitempty" gorm:"primary_key,AUTO_INCREMENT"`
 	Title    string `json:"title,omitempty"`
 	Content  string `json:"content,omitempty"`
 	Category string `json:"category,omitempty"`
 	Uid      int    `json:"uid,omitempty"`
 	User     User   `gorm:"ForeignKey:Uid;AssociationForeignKey:id"`
+	CreatedAt int64 `json:"create_at,omitempty"`
+	UpdatedAt int64 `json:"update_at,omitempty"`
+	DeletedAt *time.Time `json:"delete_at,omitempty"`
 }
 
 type Task struct {
-	gorm.Model
-
+	Id        uint `json:"id,omitempty" gorm:"primary_key,AUTO_INCREMENT"`
 	Title      string    `form:"title" json:"title,omitempty" binding:"required"`
 	Content    string    `form:"content" json:"content,omitempty" binding:"required"`
 	Uid        string    `form:"uid" json:"uid,omitempty" binding:"required"`
@@ -60,10 +64,13 @@ type Task struct {
 	Project    string    `form:"project" json:"project,omitempty" binding:"required"`
 	Type       string    `form:"type" json:"type,omitempty" binding:"required"`
 	Accessory  string    `form:"accessory" json:"accessory,omitempty"`
-	StartTime  time.Time `form:"start_time" json:"start_time,omitempty" binding:"required"`
-	EndTime    time.Time `form:"end_time" json:"end_time,omitempty" binding:"required"`
-	BeginTime  time.Time `json:"begin_time,omitempty"`
-	FinishTime time.Time `json:"finish_time,omitempty"`
+	StartTime  int64 `form:"start_time" json:"start_time,omitempty" binding:"required"`
+	EndTime    int64 `form:"end_time" json:"end_time,omitempty" binding:"required"`
+	BeginTime  int64 `json:"begin_time,omitempty"`
+	FinishTime int64 `json:"finish_time,omitempty"`
+	CreatedAt int64 `json:"create_at,omitempty"`
+	UpdatedAt int64 `json:"update_at,omitempty"`
+	DeletedAt *time.Time `json:"delete_at,omitempty"`
 }
 
 var (
@@ -88,8 +95,8 @@ func opendb() (*gorm.DB, error) {
 
 	db.SingularTable(true) // 禁用表名复数
 
-	// db.DropTable(&User{})
-	// db.AutoMigrate(&User{})
+	// db.DropTable(&User{}, &Doc{}, &Task{})
+	// db.AutoMigrate(&User{}, &Doc{}, &Task{})
 
 	// defer db.Close()
 
@@ -104,7 +111,8 @@ func UserList() []User {
 	var val []User
 	// todo  page
 
-	db.Model(&User{}).Order("id desc").Scan(&val)
+	db.Debug().Model(&User{}).Order("id desc").Scan(&val)
+	fmt.Printf("%#v", val)
 
 	return val
 }
@@ -215,10 +223,10 @@ func TaskModify(tid, status string) bool {
 	}
 
 	if "doing" == status {
-		var data = Task{Status: "doing", BeginTime: time.Now()}
+		var data = Task{Status: "doing", BeginTime: time.Now().Unix()}
 		db.Model(&Task{}).Where("id = ?", tid).Updates(data)
 	} else if "done" == status {
-		var data = Task{Status: "done", FinishTime: time.Now()}
+		var data = Task{Status: "done", FinishTime: time.Now().Unix()}
 		db.Model(&Task{}).Where("id = ?", tid).Updates(data)
 	}
 

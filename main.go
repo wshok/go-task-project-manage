@@ -84,7 +84,7 @@ func main() {
 // built-in: role:: administrator/projector/employee/master.
 // department/doc-category/task-type :: direct save chineses-name, can add.
 // task-status: todo/doing/done
-//
+// project:  can add
 
 var helperFuncs = template.FuncMap{
 	"jsExists": func(fpath string) bool {

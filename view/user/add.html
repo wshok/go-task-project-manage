@@ -3,7 +3,7 @@
 <div class="layuimini-container">
     <form id="app-form" class="layui-form layuimini-form">
 
-        <div class="layui-form-item">
+        <!-- <div class="layui-form-item">
             <label class="layui-form-label required">用户头像</label>
             <div class="layui-input-block layuimini-upload">
                 <input name="head_img" class="layui-input layui-col-xs6" lay-verify="required" lay-reqtext="请上传用户头像" placeholder="请上传用户头像" value="">
@@ -12,7 +12,7 @@
                     <span><a class="layui-btn layui-btn-normal" id="select_head_img" data-upload-select="head_img" data-upload-number="one" data-upload-mimetype="image/*"><i class="fa fa-list"></i> 选择</a></span>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <div class="layui-form-item">
             <label class="layui-form-label required">登录账户</label>
@@ -33,9 +33,8 @@
         <div class="layui-form-item">
             <label class="layui-form-label">角色权限</label>
             <div class="layui-input-block">
-                {foreach auth_list as $key=>$val}
-                <input type="checkbox" name="auth_ids[{$key}]" lay-skin="primary" title="{$val}">
-                {/foreach}
+               <input type="radio" name="role" lay-skin="primary" title="dev">
+               <input type="radio" name="role" lay-skin="primary" title="design">
             </div>
         </div>
 

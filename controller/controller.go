@@ -20,7 +20,7 @@ func UserList(c *gin.Context) {
 	if helper.IsAjax(c) {
 
 		c.JSON(200, gin.H{
-			"code":  0,
+			"code":  1,
 			"msg":   "",
 			"count": 10,
 			"data":  module.UserList(),
@@ -139,7 +139,7 @@ func TaskList(c *gin.Context) {
 	if helper.IsAjax(c) {
 
 		c.JSON(200, gin.H{
-			"code":  0,
+			"code":  1,
 			"msg":   "",
 			"count": 10,
 			"data":  module.TaskList(),
@@ -273,6 +273,8 @@ func TaskDelete(c *gin.Context) {
 }
 
 func CardList(c *gin.Context) {
+	// fmt.Printf("%#v",module.TaskList())
+	// return
 	c.HTML(200, "task/card.html", gin.H{
 		"controller": "task",
 		"action":     "card",
@@ -295,7 +297,7 @@ func DocList(c *gin.Context) {
 	if helper.IsAjax(c) {
 
 		c.JSON(200, gin.H{
-			"code":  0,
+			"code":  1,
 			"msg":   "",
 			"count": 10,
 			"data":  module.DocList(),

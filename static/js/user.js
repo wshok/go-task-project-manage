@@ -21,11 +21,11 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 cols: [[
                     {type: "checkbox"},
                     {field: 'id', width: 80, title: 'ID'},
-                    {field: 'Username', minWidth: 80, title: '登录账户'},
-                    {field: 'Realname', minWidth: 80, title: '姓名'},
-                    {field: 'Phone', minWidth: 80, title: '手机'},
-                    {field: 'Status', title: '状态', width: 85, search: 'select', selectList: {0: '禁用', 1: '启用'}, templet: ea.table.switch},
-                    {field: 'CreateTime', minWidth: 80, title: '创建时间', search: 'range'},
+                    {field: 'username', minWidth: 80, title: '登录账户'},
+                    {field: 'realname', minWidth: 80, title: '姓名'},
+                    {field: 'phone', minWidth: 80, title: '手机'},
+                    {field: 'status', title: '状态', width: 85, search: 'select', selectList: {0: '禁用', 1: '启用'}, templet: ea.table.switch},
+                    {field: 'create_at', minWidth: 80, title: '创建时间', search: 'range'},
                     {
                         width: 250,
                         title: '操作',

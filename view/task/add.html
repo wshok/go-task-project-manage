@@ -7,7 +7,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">项目</label>
             <div class="layui-input-block">
-                <select name="cate_id" lay-verify="required" data-select="/api/task-project.json" data-fields="id,title">
+                <select name="project" lay-verify="required" data-select="/api/task-project.json" data-fields="id,title">
                 </select>
             </div>
         </div>
@@ -15,7 +15,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">类型</label>
             <div class="layui-input-block">
-                <select name="cate_id" lay-verify="required" data-select="/api/task-type.json" data-fields="id,title">
+                <select name="type" lay-verify="required" data-select="/api/task-type.json" data-fields="id,title">
                 </select>
             </div>
         </div>
@@ -23,7 +23,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">负责人</label>
             <div class="layui-input-block">
-                <select name="cate_id" lay-verify="required" data-select="/api/task-user.json" data-fields="id,username">
+                <select name="uid" lay-verify="required" data-select="/user/index" data-fields="id,username">
                 </select>
             </div>
         </div>
@@ -31,24 +31,24 @@
         <div class="layui-form-item">
             <label class="layui-form-label">名称</label>
             <div class="layui-input-block">
-                <input type="text" name="market_price" class="layui-input" lay-verify="required" placeholder="请输入名称" value="0">
+                <input type="text" name="title" class="layui-input" lay-verify="required" placeholder="请输入名称" value="">
             </div>
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">商品描述</label>
+            <label class="layui-form-label">描述</label>
             <div class="layui-input-block">
-                <textarea name="describe" rows="20" class="layui-textarea editor" placeholder="请输入商品描述"></textarea>
+                <textarea name="content" rows="20" class="layui-textarea editor" placeholder="请输入描述"></textarea>
             </div>
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label required">附件</label>
+            <label class="layui-form-label">附件</label>
             <div class="layui-input-block layuimini-upload">
-                <input name="logo" class="layui-input layui-col-xs6" lay-verify="required" placeholder="" value="">
+                <input name="accessory" class="layui-input layui-col-xs6" placeholder="" value="">
                 <div class="layuimini-upload-btn">
                     <span><a class="layui-btn" data-upload="logo" data-upload-number="one" data-upload-exts="png|jpg|ico|jpeg" data-upload-icon="image"><i class="fa fa-upload"></i> 上传</a></span>
-                    <span><a class="layui-btn layui-btn-normal" id="select_logo" data-upload-select="logo" data-upload-number="one" data-upload-mimetype="image/*"><i class="fa fa-list"></i> 选择</a></span>
+                    <span><a class="layui-btn layui-btn-normal" id="select_accessory" data-upload-select="accessory" data-upload-number="one" data-upload-mimetype="image/*"><i class="fa fa-list"></i> 选择</a></span>
                 </div>
             </div>
         </div>
@@ -57,15 +57,8 @@
         <div class="layui-inline">
           <label class="layui-form-label">日期范围</label>
           <div class="layui-input-inline">
-            <input type="text" class="layui-input" id="test6" placeholder=" - " lay-key="7">
+            <input type="text" class="layui-input" id="test1" placeholder=" - " lay-key="7">
           </div>
-        </div>
-
-        <div class="layui-form-item layui-form-text">
-            <label class="layui-form-label">备注信息</label>
-            <div class="layui-input-block">
-                <textarea name="remark" class="layui-textarea" placeholder="请输入备注信息"></textarea>
-            </div>
         </div>
 
         <div class="hr-line"></div>
@@ -76,4 +69,17 @@
 
     </form>
 </div>
+
+<script>
+layui.use('laydate', function(){
+  var laydate = layui.laydate;
+  
+  //执行一个laydate实例
+  laydate.render({
+    elem: '#test1',
+    range: true,
+    show: true,
+  });
+});
+</script>
 {{end}}
