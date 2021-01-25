@@ -1,7 +1,7 @@
 package module
 
 import (
-	"fmt"
+	// "fmt"
 	// "flag"
 	"time"
 	// "strconv"
@@ -112,7 +112,6 @@ func UserList() []User {
 	// todo  page
 
 	db.Debug().Model(&User{}).Order("id desc").Scan(&val)
-	fmt.Printf("%#v", val)
 
 	return val
 }
