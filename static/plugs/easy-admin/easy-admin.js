@@ -170,6 +170,48 @@ define(["jquery", "tableSelect", "ckeditor"], function ($, tableSelect, undefine
             }
         },
         table: {
+            date: function (data, option) {
+                option.formats = option.formats || 'Y-m-d';
+
+                var zero = function (value) {
+                    if (value < 10) {
+                        return '0' + value;
+                    }
+                    return value;
+                };
+
+                var field = option.field;
+                try {
+                    var value = eval("data." + field);
+                } catch (e) {
+                    var value = undefined;
+                }
+
+                
+                if (value) {
+                    var myDate = new Date(value*1000);
+                } else{
+                    return ''
+                }
+
+                var year = myDate.getFullYear();
+                var month = zero(myDate.getMonth() + 1);
+                var day = zero(myDate.getDate());
+                var hour = zero(myDate.getHours());
+                var minite = zero(myDate.getMinutes());
+                var second = zero(myDate.getSeconds());
+
+                return option.formats.replace(/Y|m|d|H|i|s/ig, function (matches) {
+                    return ({
+                        Y: year,
+                        m: month,
+                        d: day,
+                        H: hour,
+                        i: minite,
+                        s: second
+                    })[matches];
+                });
+            },
             render: function (options) {
                 options.init = options.init || init;
                 options.modifyReload = admin.parame(options.modifyReload, true);

@@ -49,15 +49,15 @@ type Doc struct {
 type Task struct {
 	Id        uint `form:"id" json:"id,omitempty" gorm:"primary_key,AUTO_INCREMENT"`
 	Title      string    `form:"title" json:"title,omitempty" binding:"required"`
-	Content    string    `form:"content" json:"content,omitempty" binding:"required"`
+	Content    string    `form:"content" json:"content,omitempty" gorm:"not null;default:''"`
 	Uid        string    `form:"uid" json:"uid,omitempty" binding:"required" gorm:"type:int(10);not null;default:0"`
 	Status     string    `form:"status" json:"status,omitempty" gorm:"type:varchar(16);not null;default:'todo'"`
 	Progress   string    `form:"progress" json:"progress,omitempty" gorm:"type:int(1);not null;default:0"`
 	Project    string    `form:"project" json:"project,omitempty" binding:"required" gorm:"type:varchar(32);not null;default:''"`
 	Type       string    `form:"type" json:"type,omitempty" binding:"required" gorm:"type:varchar(32);not null;default:''"`
 	Accessory  string    `form:"accessory" json:"accessory,omitempty" gorm:"not null;default:''"`
-	StartTime  int64 `json:"start_time,omitempty"`
-	EndTime    int64 `json:"end_time,omitempty"`
+	StartTime  int64 `json:"start_time,omitempty" binding:"required"`
+	EndTime    int64 `json:"end_time,omitempty" binding:"required"`
 	BeginTime  int64 `json:"begin_time,omitempty"`
 	FinishTime int64 `json:"finish_time,omitempty"`
 	CreatedAt time.Time `json:"create_at,omitempty"`
@@ -252,12 +252,17 @@ func TaskDelete(tid string) bool {
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@doc
 //
 
-func DocList() []Doc {
-	var val []Doc
+func DocList() interface{} {
 
-	db.Model(&Doc{}).Order("id desc").Select("hd_doc.*, u.username").Joins("left join hd_user u on u.id = hd_doc.uid").Find(&val)
 
-	return val
+	var result []struct {
+		Doc
+		Username string `json:"username"`
+	}
+
+	db.Table("hd_doc").Order("id desc").Select("hd_doc.*, u.username").Joins("left join hd_user u on u.id = hd_doc.uid").Scan(&result)
+
+	return result
 }
 
 func DocAdd(data Doc) bool {

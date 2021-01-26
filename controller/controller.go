@@ -7,7 +7,8 @@ import (
 	"app/module"
 	// "html/template"
 	// "fmt"
-	// "strings"
+	"strings"
+	"time"
 	// "strconv"
 )
 
@@ -159,6 +160,14 @@ func TaskAdd(c *gin.Context) {
 	if helper.IsAjax(c) {
 
 		var task module.Task
+
+		up_date := strings.Split(c.PostForm("up_date"), " ~ ")
+
+		startTime, _ := time.Parse("2006-01-02", up_date[0])
+		task.StartTime = startTime.Unix()
+
+		endTime, _ := time.Parse("2006-01-02", up_date[1])
+		task.EndTime = endTime.Unix()
 
 		if err := c.ShouldBind(&task); err != nil {
 			c.JSON(200, gin.H{"error": err.Error()})
