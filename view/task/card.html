@@ -15,12 +15,13 @@
             <blockquote class="layui-elem-quote" id="{{ $v.Id }}">
                 <div class="layui-row">
                   <div class="layui-col-sm12">
-                    <div class="content">{{ $v.Content }}</div>
+                    <div class="content">{{ $v.Title }}</div>
                   </div>
                   <div class="layui-col-sm12">
                     <div class="datetime" style="text-align: right;">
-                      <span class="layui-badge-rim"><i class="layui-icon layui-icon-log"></i> {{ $v.StartTime |timeFormat }} ~ {{ $v.EndTime |timeFormat }}</span>
-                      <span class="layui-badge-rim"><i class="layui-icon layui-icon-at"></i> {{ $v.User.Realname }}</span>
+                      <span class="layui-badge-rim">{{ $v.Username }}</span>
+                      <span class="layui-badge layui-bg-blue">{{ if eq "0" $v.Type }} dev {{else if eq "1" $v.Type}} des {{else}} test {{end}}</span>
+                      <span class="layui-badge layui-bg-orange">{{ $v.StartTime |timeFormat }} ~ {{ $v.EndTime |timeFormat }}</span>
                     </div>
                   </div>
                 </div>
@@ -41,12 +42,12 @@
             <blockquote class="layui-elem-quote" id="{{ $v.Id }}">
                 <div class="layui-row">
                   <div class="layui-col-sm12">
-                    <div class="content">{{ $v.Content }}</div>
+                    <div class="content">{{ $v.Title }}</div>
                   </div>
                   <div class="layui-col-sm12">
                     <div class="datetime" style="text-align: right;">
                       <span class="layui-badge-rim"><i class="layui-icon layui-icon-log"></i> {{ $v.StartTime |timeFormat }} ~ {{ $v.EndTime |timeFormat }}</span>
-                      <span class="layui-badge-rim"><i class="layui-icon layui-icon-at"></i> {{ $v.User.Realname }}</span>
+                      <span class="layui-badge-rim"><i class="layui-icon layui-icon-at"></i> {{ $v.Username }}</span>
                     </div>
                   </div>
                 </div>
@@ -67,12 +68,12 @@
             <blockquote class="layui-elem-quote" id="{{ $v.Id }}">
                 <div class="layui-row">
                   <div class="layui-col-sm12">
-                    <div class="content">{{ $v.Content }}</div>
+                    <div class="content">{{ $v.Type }} {{ $v.Title }}</div>
                   </div>
                   <div class="layui-col-sm12">
                     <div class="datetime" style="text-align: right;">
                       <span class="layui-badge-rim"><i class="layui-icon layui-icon-log"></i> {{ $v.StartTime |timeFormat }} ~ {{ $v.EndTime |timeFormat }}</span>
-                      <span class="layui-badge-rim"><i class="layui-icon layui-icon-at"></i> {{ $v.User.Realname }}</span>
+                      <span class="layui-badge-rim"><i class="layui-icon layui-icon-at"></i> {{ $v.Username }}</span>
                     </div>
                   </div>
                 </div>

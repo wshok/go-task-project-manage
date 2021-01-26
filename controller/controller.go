@@ -202,6 +202,14 @@ func TaskEdit(c *gin.Context) {
 	if helper.IsAjax(c) {
 		var task module.Task
 
+		up_date := strings.Split(c.PostForm("up_date"), " ~ ")
+
+		startTime, _ := time.Parse("2006-01-02", up_date[0])
+		task.StartTime = startTime.Unix()
+
+		endTime, _ := time.Parse("2006-01-02", up_date[1])
+		task.EndTime = endTime.Unix()
+
 		if err := c.ShouldBind(&task); err != nil {
 			c.JSON(400, gin.H{"error": err.Error()})
 			return
@@ -282,8 +290,7 @@ func TaskDelete(c *gin.Context) {
 }
 
 func CardList(c *gin.Context) {
-	// fmt.Printf("%#v",module.TaskList())
-	// return
+
 	c.HTML(200, "task/card.html", gin.H{
 		"controller": "task",
 		"action":     "card",
