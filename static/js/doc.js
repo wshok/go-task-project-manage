@@ -31,7 +31,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'title', minWidth:300, title: '标题', templet:function(d){
                         return '<a href="/doc/id/'+d.Id+'">'+ d.title +'</a>'
                       }},
-                    {field: 'User.realname', width: 120, title: '作者', search: false},
+                    {field: 'username', width: 120, title: '作者', search: false},
                     {field: 'create_at', width: 180, title: '创建时间', sort: true, search:false},
                     {
                         width: 150,

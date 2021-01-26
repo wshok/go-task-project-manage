@@ -161,7 +161,7 @@ func TaskAdd(c *gin.Context) {
 		var task module.Task
 
 		if err := c.ShouldBind(&task); err != nil {
-			c.JSON(400, gin.H{"error": err.Error()})
+			c.JSON(200, gin.H{"error": err.Error()})
 			return
 		}
 

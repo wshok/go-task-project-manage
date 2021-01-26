@@ -17,59 +17,51 @@ type Page struct {
 	Size   int
 }
 
-// type Model struct {
-// 	Id        uint `gorm:"column:id"`
-// 	CreatedAt time.Time `json:"create_at,omitempty"`
-// 	UpdatedAt time.Time `json:"update_at,omitempty"`
-// 	DeletedAt time.Time `json:"delete_at,omitempty"`
-// }
 
 type User struct {
 	Id        uint `json:"id" gorm:"primary_key,AUTO_INCREMENT"`
-	Username   string `form:"username" json:"username"`
-	Realname   string `form:"realname" json:"realname"`
-	Password   string `form:"password" json:"password"`
-	Email      string `form:"email" json:"email"`
-	Phone      string `form:"phone" json:"phone"`
-	Qq         string `form:"qq" json:"qq"`
-	Gender     int    `form:"gender" json:"gender"`
-	Department string `form:"department" json:"department"`
-	Role       string `form:"role" json:"role"`
-	Remark     string `form:"remark" json:"remark"`
-	CreatedAt int64 `json:"created_at"`
-	UpdatedAt int64 `json:"updated_at"`
+	Username   string `form:"username" json:"username" binding:"required" gorm:"type:varchar(32);not null;default:''"`
+	Realname   string `form:"realname" json:"realname" gorm:"type:varchar(32);not null;default:''"`
+	Password   string `form:"password" json:"password" gorm:"type:varchar(32);not null;default:''"`
+	Email      string `form:"email" json:"email" gorm:"type:varchar(64);not null;default:''"`
+	Phone      string `form:"phone" json:"phone" binding:"required" gorm:"type:varchar(16);not null;default:''"`
+	Qq         string `form:"qq" json:"qq" gorm:"type:varchar(16);not null;default:''"`
+	Gender     string    `form:"gender" json:"gender" gorm:"type:int(1);not null;default:'0'"`
+	Department string `form:"department" json:"department" gorm:"type:varchar(32);not null;default:''"`
+	Role       string `form:"role" json:"role" binding:"required" gorm:"type:varchar(32);not null;default:''"`
+	Remark     string `form:"remark" json:"remark" gorm:"type:varchar(128);not null;default:''"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 	DeletedAt *time.Time `json:"deleted_at"`
 }
 
 type Doc struct {
-	Id        int64 `json:"id,omitempty" gorm:"primary_key,AUTO_INCREMENT"`
-	Title    string `json:"title,omitempty"`
-	Content  string `json:"content,omitempty"`
-	Category string `json:"category,omitempty"`
-	Uid      int    `json:"uid,omitempty"`
-	User     User   `gorm:"ForeignKey:Uid;AssociationForeignKey:id"`
-	CreatedAt int64 `json:"create_at,omitempty"`
-	UpdatedAt int64 `json:"update_at,omitempty"`
+	Id        int64 `form:"id" json:"id,omitempty" gorm:"primary_key,AUTO_INCREMENT"`
+	Title    string `form:"title" json:"title,omitempty" binding:"required"`
+	Content  string `form:"content" json:"content,omitempty" binding:"required"`
+	Category string `form:"category" json:"category,omitempty" binding:"required" gorm:"type:varchar(32);not null;default:''"`
+	Uid      string    `form:"uid" json:"uid,omitempty" binding:"required" gorm:"type:int(10);not null;default:'0'"`
+	CreatedAt time.Time `json:"create_at,omitempty"`
+	UpdatedAt time.Time `json:"update_at,omitempty"`
 	DeletedAt *time.Time `json:"delete_at,omitempty"`
 }
 
 type Task struct {
-	Id        uint `json:"id,omitempty" gorm:"primary_key,AUTO_INCREMENT"`
+	Id        uint `form:"id" json:"id,omitempty" gorm:"primary_key,AUTO_INCREMENT"`
 	Title      string    `form:"title" json:"title,omitempty" binding:"required"`
 	Content    string    `form:"content" json:"content,omitempty" binding:"required"`
-	Uid        string    `form:"uid" json:"uid,omitempty" binding:"required"`
-	User       User      `gorm:"ForeignKey:Uid;AssociationForeignKey:id"`
-	Status     string    `form:"status" json:"status,omitempty" binding:"required"`
-	Progress   string    `form:"progress" json:"progress,omitempty" binding:"required"`
-	Project    string    `form:"project" json:"project,omitempty" binding:"required"`
-	Type       string    `form:"type" json:"type,omitempty" binding:"required"`
-	Accessory  string    `form:"accessory" json:"accessory,omitempty"`
-	StartTime  int64 `form:"start_time" json:"start_time,omitempty" binding:"required"`
-	EndTime    int64 `form:"end_time" json:"end_time,omitempty" binding:"required"`
+	Uid        string    `form:"uid" json:"uid,omitempty" binding:"required" gorm:"type:int(10);not null;default:0"`
+	Status     string    `form:"status" json:"status,omitempty" gorm:"type:varchar(16);not null;default:'todo'"`
+	Progress   string    `form:"progress" json:"progress,omitempty" gorm:"type:int(1);not null;default:0"`
+	Project    string    `form:"project" json:"project,omitempty" binding:"required" gorm:"type:varchar(32);not null;default:''"`
+	Type       string    `form:"type" json:"type,omitempty" binding:"required" gorm:"type:varchar(32);not null;default:''"`
+	Accessory  string    `form:"accessory" json:"accessory,omitempty" gorm:"not null;default:''"`
+	StartTime  int64 `json:"start_time,omitempty"`
+	EndTime    int64 `json:"end_time,omitempty"`
 	BeginTime  int64 `json:"begin_time,omitempty"`
 	FinishTime int64 `json:"finish_time,omitempty"`
-	CreatedAt int64 `json:"create_at,omitempty"`
-	UpdatedAt int64 `json:"update_at,omitempty"`
+	CreatedAt time.Time `json:"create_at,omitempty"`
+	UpdatedAt time.Time `json:"update_at,omitempty"`
 	DeletedAt *time.Time `json:"delete_at,omitempty"`
 }
 
@@ -111,7 +103,7 @@ func UserList() []User {
 	var val []User
 	// todo  page
 
-	db.Debug().Model(&User{}).Order("id desc").Scan(&val)
+	db.Model(&User{}).Order("id desc").Scan(&val)
 
 	return val
 }
@@ -171,12 +163,15 @@ func UserDelete(uid string) bool {
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@task
 //
 
-func TaskList() []Task {
-	var val []Task
+func TaskList() interface{} {
+	var result []struct {
+		Task
+		Username string `json:"username"`
+	}
 
-	db.Model(&Task{}).Order("id desc").Preload("User").Find(&val)
+	db.Table("hd_task").Order("id desc").Select("hd_task.*, u.username").Joins("left join hd_user u on u.id = hd_task.uid").Scan(&result)
 
-	return val
+	return result
 }
 
 func TaskAdd(data Task) bool {
@@ -260,7 +255,7 @@ func TaskDelete(tid string) bool {
 func DocList() []Doc {
 	var val []Doc
 
-	db.Model(&Doc{}).Order("id desc").Preload("User").Find(&val)
+	db.Model(&Doc{}).Order("id desc").Select("hd_doc.*, u.username").Joins("left join hd_user u on u.id = hd_doc.uid").Find(&val)
 
 	return val
 }
