@@ -26,9 +26,10 @@ type User struct {
 	Email      string `form:"email" json:"email" gorm:"type:varchar(64);not null;default:''"`
 	Phone      string `form:"phone" json:"phone" binding:"required" gorm:"type:varchar(16);not null;default:''"`
 	Qq         string `form:"qq" json:"qq" gorm:"type:varchar(16);not null;default:''"`
-	Gender     string    `form:"gender" json:"gender" gorm:"type:int(1);not null;default:'0'"`
+	Gender     string    `form:"gender" json:"gender" gorm:"type:int(1);not null;default:0"`
 	Department string `form:"department" json:"department" gorm:"type:varchar(32);not null;default:''"`
 	Role       string `form:"role" json:"role" binding:"required" gorm:"type:varchar(32);not null;default:''"`
+	Status     int `form:"status" json:"status" gorm:"type:int(1);not null;default:0"`
 	Remark     string `form:"remark" json:"remark" gorm:"type:varchar(128);not null;default:''"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
@@ -87,8 +88,8 @@ func opendb() (*gorm.DB, error) {
 
 	db.SingularTable(true) // 禁用表名复数
 
-	// db.DropTable(&User{}, &Doc{}, &Task{})
-	// db.AutoMigrate(&User{}, &Doc{}, &Task{})
+	// db.DropTable(&User{})//, &Doc{}, &Task{})
+	// db.AutoMigrate(&User{})//, &Doc{}, &Task{})
 
 	// defer db.Close()
 
@@ -135,11 +136,28 @@ func UserEdit(uid string, data User) int {
 	return 0
 }
 
-func UserInfo(tid string) Task {
-	var task Task
-	db.First(&task, tid)
+func UserInfo(uid string) User {
+	var user User
+	db.First(&user, uid)
 
-	return task
+	return user
+}
+
+func UserModify(uid, field, value string) bool {
+	var user User
+	db.First(&user, uid)
+
+	if user == (User{}) {
+		return false
+	}
+
+	db.Table("hd_user").Where("id = ?", uid).Updates(map[string]interface{}{field: value})
+
+	if db.RowsAffected > 0 || db.Error == nil {
+		return true
+	}
+
+	return false
 }
 
 func UserDelete(uid string) bool {

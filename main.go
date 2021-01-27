@@ -47,7 +47,9 @@ func main() {
 
 		user.Any("/edit", controller.UserEdit)
 
-		user.POST("/del", controller.UserDelete)
+		user.POST("/modify", controller.UserModify)
+
+		user.POST("/delete", controller.UserDelete)
 	}
 
 	task := g.Group("/task")
@@ -58,7 +60,7 @@ func main() {
 
 		task.Any("/edit", controller.TaskEdit)
 
-		task.POST("/del", controller.TaskDelete)
+		task.POST("/delete", controller.TaskDelete)
 
 		task.POST("/modify/:id", controller.TaskModify)
 
@@ -75,7 +77,7 @@ func main() {
 
 		doc.Any("/edit", controller.DocEdit)
 
-		doc.POST("/del", controller.DocDelete)
+		doc.POST("/delete", controller.DocDelete)
 	}
 
 	g.Run(":8090")

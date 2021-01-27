@@ -111,8 +111,32 @@ func UserEdit(c *gin.Context) {
 	}
 }
 
+func UserModify(c *gin.Context) {
+	var field = c.PostForm("field")
+	// value, _ := strconv.Atoi(c.PostForm("value"))
+	var value = c.PostForm("value")
+	var uid = c.PostForm("id")
+
+	if module.UserModify(uid, field, value) {
+
+		c.JSON(200, gin.H{
+			"code": 1,
+			"msg":  "修改成功",
+			"data": "",
+		})
+
+	} else {
+
+		c.JSON(200, gin.H{
+			"code": 0,
+			"msg":  "修改失败",
+			"data": "",
+		})
+	}
+}
+
 func UserDelete(c *gin.Context) {
-	var uid = c.Param("id")
+	var uid = c.Query("id")
 
 	if module.UserDelete(uid) {
 
@@ -247,10 +271,11 @@ func TaskEdit(c *gin.Context) {
 }
 
 func TaskModify(c *gin.Context) {
-	var status = c.PostForm("status")
-	var taskId = c.Param("id")
+	// var field = c.PostForm("field")
+	var value = c.PostForm("value")
+	var taskId = c.PostForm("id")
 
-	if module.TaskModify(taskId, status) {
+	if module.TaskModify(taskId, value) {
 
 		c.JSON(200, gin.H{
 			"code": 1,
@@ -269,7 +294,7 @@ func TaskModify(c *gin.Context) {
 }
 
 func TaskDelete(c *gin.Context) {
-	var taskId = c.Param("id")
+	var taskId = c.Query("id")
 
 	if module.TaskDelete(taskId) {
 
@@ -404,7 +429,7 @@ func DocEdit(c *gin.Context) {
 }
 
 func DocDelete(c *gin.Context) {
-	var id = c.Param("id")
+	var id = c.Query("id")
 
 	if module.DocDelete(id) {
 

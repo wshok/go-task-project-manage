@@ -8,7 +8,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
         edit_url: 'user/edit',
         delete_url: 'user/delete',
         password_url: 'user/password',
-        // modify_url: 'user/modify',
+        modify_url: 'user/modify',
         // export_url: 'user/export',
     };
 
