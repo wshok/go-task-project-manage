@@ -6,7 +6,8 @@ import (
 	"app/helper"
 	"app/module"
 	// "html/template"
-	// "fmt"
+	"fmt"
+	"crypto/md5"
 	"strings"
 	"time"
 	// "strconv"
@@ -131,6 +132,38 @@ func UserModify(c *gin.Context) {
 			"code": 0,
 			"msg":  "修改失败",
 			"data": "",
+		})
+	}
+}
+
+func UserPassword(c *gin.Context) {
+	var uid = c.Query("id")
+	var password = c.PostForm("password")
+    password = fmt.Sprintf("%x", md5.Sum([]byte(password)))
+
+	if helper.IsAjax(c) {
+		if module.UserModify(uid, "password", password) {
+
+			c.JSON(200, gin.H{
+				"code": 1,
+				"msg":  "修改成功",
+				"data": "",
+			})
+
+		} else {
+
+			c.JSON(200, gin.H{
+				"code": 0,
+				"msg":  "修改失败",
+				"data": "",
+			})
+		}
+	} else {
+
+		c.HTML(200, "user/password.html", gin.H{
+			"controller": "user",
+			"action":     "edit",
+			"data":       module.UserInfo(uid),
 		})
 	}
 }
@@ -271,11 +304,10 @@ func TaskEdit(c *gin.Context) {
 }
 
 func TaskModify(c *gin.Context) {
-	// var field = c.PostForm("field")
-	var value = c.PostForm("value")
-	var taskId = c.PostForm("id")
+	var status = c.PostForm("status")
+	var taskId = c.Param("id")
 
-	if module.TaskModify(taskId, value) {
+	if module.TaskModify(taskId, status) {
 
 		c.JSON(200, gin.H{
 			"code": 1,

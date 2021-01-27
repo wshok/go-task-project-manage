@@ -49,6 +49,8 @@ func main() {
 
 		user.POST("/modify", controller.UserModify)
 
+		user.Any("/password", controller.UserPassword)
+
 		user.POST("/delete", controller.UserDelete)
 	}
 

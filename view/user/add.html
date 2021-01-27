@@ -38,8 +38,8 @@
         <div class="layui-form-item">
             <label class="layui-form-label">角色权限</label>
             <div class="layui-input-block">
-               <input type="radio" name="role" lay-skin="primary" title="dev" value="dev">
-               <input type="radio" name="role" lay-skin="primary" title="design" value="design">
+                <select name="role" lay-verify="required" data-select="/api/auth.json" data-fields="id,title" data-value="{{.data.Role}}">
+                </select>
             </div>
         </div>
 
