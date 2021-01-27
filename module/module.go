@@ -187,7 +187,7 @@ func TaskList() interface{} {
 		Username string `json:"username"`
 	}
 
-	db.Table("hd_task").Order("id desc").Select("hd_task.*, u.username").Joins("left join hd_user u on u.id = hd_task.uid").Scan(&result)
+	db.Table("hd_task").Order("id desc").Select("hd_task.*, u.username").Joins("left join hd_user u on u.id = hd_task.uid").Find(&result)
 
 	return result
 }

@@ -7,7 +7,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">项目</label>
             <div class="layui-input-block">
-                <select name="cate_id" lay-verify="required" data-select="/api/task-project.json" data-fields="id,title">
+                <select name="project" lay-verify="required" data-select="/api/task-project.json" data-fields="id,title" data-value="{{.data.Project}}">
                 </select>
             </div>
         </div>
@@ -15,7 +15,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">类型</label>
             <div class="layui-input-block">
-                <select name="cate_id" lay-verify="required" data-select="/api/task-type.json" data-fields="id,title">
+                <select name="type" lay-verify="required" data-select="/api/task-type.json" data-fields="id,title" data-value="{{.data.Type}}">
                 </select>
             </div>
         </div>
@@ -23,7 +23,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">负责人</label>
             <div class="layui-input-block">
-                <select name="uid" lay-verify="required" data-select="/user/index" data-fields="id,username">
+                <select name="uid" lay-verify="required" data-select="/user/index" data-fields="id,username" data-value="{{.data.Uid}}">
                 </select>
             </div>
         </div>
