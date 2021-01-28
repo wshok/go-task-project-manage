@@ -460,6 +460,16 @@ func DocEdit(c *gin.Context) {
 	}
 }
 
+func DocView(c *gin.Context) {
+	var id = c.Param("id")
+	
+	c.HTML(200, "doc/view.html", gin.H{
+		"controller": "doc",
+		"action":     "view",
+		"data":       module.DocInfo(id),
+	})
+}
+
 func DocDelete(c *gin.Context) {
 	var id = c.Query("id")
 

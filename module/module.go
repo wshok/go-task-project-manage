@@ -278,7 +278,7 @@ func DocList() interface{} {
 		Username string `json:"username"`
 	}
 
-	db.Table("hd_doc").Order("id desc").Select("hd_doc.*, u.username").Joins("left join hd_user u on u.id = hd_doc.uid").Scan(&result)
+	db.Table("hd_doc").Order("id desc").Select("hd_doc.*, u.username").Joins("left join hd_user u on u.id = hd_doc.uid").Find(&result)
 
 	return result
 }

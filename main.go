@@ -75,11 +75,13 @@ func main() {
 	{
 		doc.GET("/index", controller.DocList)
 
-		doc.GET("/add", controller.DocAdd)
+		doc.Any("/add", controller.DocAdd)
 
 		doc.Any("/edit", controller.DocEdit)
 
 		doc.POST("/delete", controller.DocDelete)
+
+		doc.GET("/view/:id", controller.DocView)
 	}
 
 	g.Run(":8090")
