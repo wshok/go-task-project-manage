@@ -1,15 +1,18 @@
-<link rel="stylesheet" href="__STATIC__/admin/css/login.css?v={$version}" media="all">
+{{ define "login.html"}}
+
+{{ template "header" .}}
+
+<link rel="stylesheet" href="static/css/login.css" media="all">
 <div class="main-body">
     <div class="login-main">
         <div class="login-top">
-            <span>{:sysconfig('site','site_name')}</span>
+            <span>xxx</span>
             <span class="bg1"></span>
             <span class="bg2"></span>
         </div>
         <form class="layui-form login-bottom">
-            <div class="demo{if !$demo} layui-hide{/if}">用户名:admin 密码:123456</div>
+            <div class="demo layui-hide">用户名:admin 密码:123456</div>
             <div class="center">
-
                 <div class="item">
                     <span class="icon icon-2"></span>
                     <input type="text" name="username" lay-verify="required"  placeholder="请输入登录账号" maxlength="24"/>
@@ -21,12 +24,12 @@
                     <span class="bind-password icon icon-4"></span>
                 </div>
 
-                {if $captcha == 1}
+                {{if eq .captcha 1}}
                 <div id="validatePanel" class="item" style="width: 137px;">
                     <input type="text" name="captcha" placeholder="请输入验证码" maxlength="4">
-                    <img id="refreshCaptcha" class="validateImg"  src="{:url('login/captcha')}" onclick="this.src='{:url(\'login/captcha\')}?seed='+Math.random()">
+                    <img id="refreshCaptcha" class="validateImg"  src="/captcha" onclick="this.src='/captcha?seed='+Math.random()">
                 </div>
-                {/if}
+                {{ end }}
 
             </div>
             <div class="tip">
@@ -40,6 +43,5 @@
         </form>
     </div>
 </div>
-<div class="footer">
-    {:sysconfig('site','site_copyright')}<span class="padding-5">|</span><a target="_blank" href="http://www.miitbeian.gov.cn">{:sysconfig('site','site_beian')}</a>
-</div>
+
+{{ end }}

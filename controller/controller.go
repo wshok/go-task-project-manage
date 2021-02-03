@@ -13,6 +13,45 @@ import (
 	// "strconv"
 )
 
+
+func Login(c *gin.Context) {
+	
+	if helper.IsAjax(c) {
+
+		var uid = c.Query("id")
+		var user module.User
+
+		if err := c.ShouldBind(&user); err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+
+		user = module.UserInfo(uid)
+
+		if user == (module.User{}) {
+			c.JSON(200, gin.H{
+				"code": 1,
+				"msg":  "成功",
+				"data": "",
+			})
+		} else {
+			c.JSON(200, gin.H{
+				"code": 0,
+				"msg":  "失败",
+				"data": "",
+			})
+		}
+	} else {
+
+		c.HTML(200, "login.html", gin.H{
+			"controller": "login",
+			"action":     "index",
+			"data": "",
+			"captcha": 0,
+		})
+	}
+}
+
 //
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@user
 //

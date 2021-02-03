@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"html/template"
+	"regexp"
+	"net/http"
 	"path/filepath"
 
 	"app/controller"
@@ -11,11 +13,51 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func auth() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		if c.Request.URL.Path == "/login" {
+			return
+		}
+		match, _ := regexp.MatchString(".*.(js|css|jpg|png|ico)", c.Request.URL.Path)
+		// fmt.Println(match, c.Request.URL.Path)
+		// return
+		if match {
+			return
+		}
+
+		// Set example variable
+		cookie, err := c.Cookie("_token_")
+
+        if err != nil {
+        	if cookie != "" {
+        		c.JSON(200, gin.H{
+					"code": 1,
+					"msg":  "ok",
+					"data": cookie,
+				})	
+        	} else {
+        		c.Redirect(http.StatusFound, "/login")
+        	}
+        	
+            // c.SetCookie("_token_", "test", 3600, "/", "localhost", false, true)
+        } else {
+        	
+        }
+
+		// before request
+
+		c.Next()
+	}
+}
+
 func main() {
 
 	gin.SetMode(gin.ReleaseMode)
 
 	g := gin.New()
+
+	g.Use(gin.Recovery())
+	g.Use(auth())
 
 	g.SetFuncMap(helperFuncs)
 
@@ -24,6 +66,7 @@ func main() {
 	g.Static("/static", filepath.Join("", "./static"))
 	g.Static("/plugs", filepath.Join("", "./static/plugs"))
 	g.Static("/api", filepath.Join("", "./api"))
+
 
 	g.GET("/", func(c *gin.Context) {
 		c.HTML(200, "index/index.html", gin.H{
@@ -38,6 +81,8 @@ func main() {
 			"action":     "welcome",
 		})
 	})
+
+	g.Any("/login", controller.Login)
 
 	user := g.Group("/user")
 	{
