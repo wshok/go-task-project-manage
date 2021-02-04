@@ -24,11 +24,11 @@ type User struct {
 	Realname   string `form:"realname" json:"realname" gorm:"type:varchar(32);not null;default:''"`
 	Password   string `form:"password" json:"password" gorm:"type:varchar(32);not null;default:''"`
 	Email      string `form:"email" json:"email" gorm:"type:varchar(64);not null;default:''"`
-	Phone      string `form:"phone" json:"phone" binding:"required" gorm:"type:varchar(16);not null;default:''"`
+	Phone      string `form:"phone" json:"phone" gorm:"type:varchar(16);not null;default:''"`
 	Qq         string `form:"qq" json:"qq" gorm:"type:varchar(16);not null;default:''"`
 	Gender     string    `form:"gender" json:"gender" gorm:"type:int(1);not null;default:0"`
 	Department string `form:"department" json:"department" gorm:"type:varchar(32);not null;default:''"`
-	Role       string `form:"role" json:"role" binding:"required" gorm:"type:varchar(32);not null;default:''"`
+	Role       string `form:"role" json:"role" gorm:"type:varchar(32);not null;default:''"`
 	Status     int `form:"status" json:"status" gorm:"type:int(1);not null;default:0"`
 	Remark     string `form:"remark" json:"remark" gorm:"type:varchar(128);not null;default:''"`
 	CreatedAt time.Time `json:"created_at"`
@@ -139,6 +139,14 @@ func UserEdit(uid string, data User) int {
 func UserInfo(uid string) User {
 	var user User
 	db.First(&user, uid)
+
+	return user
+}
+
+func UserInfoByName(username string) User {
+	var user User
+
+	db.Model(&User{}).Where("username = ?", username).Find(&user)
 
 	return user
 }

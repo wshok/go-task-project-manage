@@ -10,7 +10,7 @@ import (
 	"crypto/md5"
 	"strings"
 	"time"
-	// "strconv"
+	"strconv"
 )
 
 
@@ -18,7 +18,6 @@ func Login(c *gin.Context) {
 	
 	if helper.IsAjax(c) {
 
-		var uid = c.Query("id")
 		var user module.User
 
 		if err := c.ShouldBind(&user); err != nil {
@@ -26,18 +25,25 @@ func Login(c *gin.Context) {
 			return
 		}
 
-		user = module.UserInfo(uid)
+		var username = c.PostForm("username")
+		var password = c.PostForm("password")
+		password = fmt.Sprintf("%x", md5.Sum([]byte(password)))
 
-		if user == (module.User{}) {
-			c.JSON(200, gin.H{
-				"code": 1,
-				"msg":  "成功",
-				"data": "",
-			})
-		} else {
+		user = module.UserInfoByName(username)
+
+		if user == (module.User{}) || password != user.Password {
 			c.JSON(200, gin.H{
 				"code": 0,
 				"msg":  "失败",
+				"data": "",
+			})
+		} else {
+			var host =c.GetHeader("Host")
+			c.SetCookie("_token_", strconv.FormatUint(uint64(user.Id), 10), 0, "/", host, false, true)
+
+			c.JSON(200, gin.H{
+				"code": 1,
+				"msg":  "成功",
 				"data": "",
 			})
 		}
@@ -86,6 +92,8 @@ func UserAdd(c *gin.Context) {
 			c.JSON(400, gin.H{"error": err.Error()})
 			return
 		}
+
+		user.Password = fmt.Sprintf("%x", md5.Sum([]byte(user.Password)))
 
 		if module.UserAdd(user) {
 			c.JSON(200, gin.H{

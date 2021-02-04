@@ -44,8 +44,6 @@ func auth() gin.HandlerFunc {
         	
         }
 
-		// before request
-
 		c.Next()
 	}
 }
