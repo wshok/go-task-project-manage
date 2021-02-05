@@ -18,9 +18,8 @@ func auth() gin.HandlerFunc {
 		if c.Request.URL.Path == "/login" {
 			return
 		}
+
 		match, _ := regexp.MatchString(".*.(js|css|jpg|png|ico)", c.Request.URL.Path)
-		// fmt.Println(match, c.Request.URL.Path)
-		// return
 		if match {
 			return
 		}
@@ -28,20 +27,13 @@ func auth() gin.HandlerFunc {
 		// Set example variable
 		cookie, err := c.Cookie("_token_")
 
-        if err != nil {
-        	if cookie != "" {
-        		c.JSON(200, gin.H{
-					"code": 1,
-					"msg":  "ok",
-					"data": cookie,
-				})	
-        	} else {
+        if err == nil {
+        	uid,_ := helper.Decrypt([]byte(cookie))
+        	if len(uid) < 1 {
         		c.Redirect(http.StatusFound, "/login")
         	}
-        	
-            // c.SetCookie("_token_", "test", 3600, "/", "localhost", false, true)
         } else {
-        	
+        	c.Redirect(http.StatusFound, "/login")
         }
 
 		c.Next()

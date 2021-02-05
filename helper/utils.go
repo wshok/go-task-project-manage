@@ -65,9 +65,9 @@ func PathExists(path string) (bool, error) {
 	return false, err
 }
 
-func Decrypt(ciphertext []byte, keystring string) ([]byte, error) {
+func Decrypt(ciphertext []byte) ([]byte, error) {
 	// Key
-	key := []byte(keystring)
+	key := []byte("O+1SS+dSIJEH5B3f")
 
 	// Create the AES cipher
 	block, err := aes.NewCipher(key)
@@ -97,10 +97,10 @@ func Decrypt(ciphertext []byte, keystring string) ([]byte, error) {
 	return ciphertext, nil
 }
 
-func Encrypt(plaintext []byte, keystring string) ([]byte, error) {
+func Encrypt(plaintext []byte) ([]byte, error) {
 
 	// Key
-	key := []byte(keystring)
+	key := []byte("O+1SS+dSIJEH5B3f")
 
 	// Create the AES cipher
 	block, err := aes.NewCipher(key)

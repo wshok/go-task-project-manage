@@ -6,8 +6,7 @@ import (
 	"app/helper"
 	"app/module"
 	// "html/template"
-	"fmt"
-	"crypto/md5"
+	// "fmt"
 	"strings"
 	"time"
 	"strconv"
@@ -27,7 +26,7 @@ func Login(c *gin.Context) {
 
 		var username = c.PostForm("username")
 		var password = c.PostForm("password")
-		password = fmt.Sprintf("%x", md5.Sum([]byte(password)))
+		password = helper.Md5(password)
 
 		user = module.UserInfoByName(username)
 
@@ -39,7 +38,8 @@ func Login(c *gin.Context) {
 			})
 		} else {
 			var host =c.GetHeader("Host")
-			c.SetCookie("_token_", strconv.FormatUint(uint64(user.Id), 10), 0, "/", host, false, true)
+			uid,_ := helper.Encrypt([]byte(strconv.FormatUint(uint64(user.Id), 10)))
+			c.SetCookie("_token_", string(uid), 0, "/", host, false, true)
 
 			c.JSON(200, gin.H{
 				"code": 1,
@@ -93,7 +93,7 @@ func UserAdd(c *gin.Context) {
 			return
 		}
 
-		user.Password = fmt.Sprintf("%x", md5.Sum([]byte(user.Password)))
+		user.Password = helper.Md5(user.Password)
 
 		if module.UserAdd(user) {
 			c.JSON(200, gin.H{
@@ -186,7 +186,7 @@ func UserModify(c *gin.Context) {
 func UserPassword(c *gin.Context) {
 	var uid = c.Query("id")
 	var password = c.PostForm("password")
-    password = fmt.Sprintf("%x", md5.Sum([]byte(password)))
+    password = helper.Md5(password)
 
 	if helper.IsAjax(c) {
 		if module.UserModify(uid, "password", password) {
