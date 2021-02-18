@@ -139,8 +139,94 @@ function setRenderRangeText() {
 function setSchedules() {
   cal.clear();
   generateSchedule(cal.getViewName(), cal.getDateRangeStart(), cal.getDateRangeEnd());
-  cal.createSchedules(ScheduleList);
-  refreshScheduleVisibility();
+
+  // cal.createSchedules(ScheduleList);
+  // refreshScheduleVisibility();
+}
+
+function ScheduleInfo() {
+    this.id = null;
+    this.calendarId = null;
+
+    this.title = null;
+    this.body = null;
+    this.isAllday = true;
+    this.start = null;
+    this.end = null;
+    this.category = 'allday';
+    this.dueDateClass = '';
+
+    this.color = null;
+    this.bgColor = null;
+    this.dragBgColor = null;
+    this.borderColor = null;
+    this.customStyle = '';
+
+    this.isFocused = false;
+    this.isPending = false;
+    this.isVisible = true;
+    this.isReadOnly = true;
+    this.goingDuration = 0;
+    this.comingDuration = 0;
+    this.recurrenceRule = '';
+    this.state = '';
+
+    this.raw = {
+        memo: '',
+        hasToOrCc: false,
+        hasRecurrenceRule: false,
+        location: null,
+        class: 'public', // or 'private'
+        creator: {
+            name: '',
+            avatar: '',
+            company: '',
+            email: '',
+            phone: ''
+        }
+    };
+}
+
+function generateSchedule(viewName, renderStart, renderEnd) {
+    ScheduleList = [];
+    generateRandomSchedule();
+}
+
+function generateRandomSchedule() {
+    $.ajax({
+        url: '/task/index',
+        type: 'get',
+        contentType: "application/json; charset=UTF-8",
+        XRequestedWith: "XMLHttpRequest",
+        dataType: "json",
+        data: '',
+        timeout: 60,
+        success: function (res) {
+            res.data.forEach(function(item, index){
+
+                var schedule = new ScheduleInfo();
+                schedule.id = chance.guid();
+
+                schedule.title = item.title
+                schedule.state = item.status;
+                schedule.attendees = [item.username];
+                schedule.start = moment(item.start_time*1000).toDate();
+                schedule.end = moment(item.end_time*1000).toDate();
+
+                var calendar = CalendarList[chance.integer({min: 0, max: 7})]
+                schedule.calendarId = calendar.id;
+                schedule.color = calendar.color;
+                schedule.bgColor = calendar.bgColor;
+                schedule.dragBgColor = calendar.dragBgColor;
+                schedule.borderColor = calendar.borderColor;
+
+                ScheduleList.push(schedule);
+            });
+            
+            cal.createSchedules(ScheduleList);
+            refreshScheduleVisibility();
+        }
+    });
 }
 
 
