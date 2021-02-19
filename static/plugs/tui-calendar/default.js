@@ -208,6 +208,7 @@ function generateRandomSchedule() {
                 schedule.id = chance.guid();
 
                 schedule.title = item.title
+                schedule.body = item.content
                 schedule.state = item.status;
                 schedule.attendees = [item.username];
                 schedule.start = moment(item.start_time*1000).toDate();
@@ -223,6 +224,7 @@ function generateRandomSchedule() {
                 ScheduleList.push(schedule);
             });
             
+            console.log(ScheduleList)
             cal.createSchedules(ScheduleList);
             refreshScheduleVisibility();
         }

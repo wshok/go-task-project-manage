@@ -67,7 +67,7 @@
             return '<label><input type="checkbox" />Task</label>';
         },
         allday: function(schedule) {
-            return schedule.title + ' <i class="fa fa-refresh"></i>';
+            return schedule.title;
         },
         alldayTitle: function() {
             return 'All Day';
@@ -123,9 +123,9 @@
             return model.body;
         },
         popupDetailState: function(schedule) {
-            if (schedule.state == 1) {
+            if (schedule.state == 'doing') {
               return '状态 : <strong style="color:#FF9900;">进行中</strong>';  
-            } else if (schedule.state == 2) {
+            } else if (schedule.state == 'done') {
               return '状态 : <strong style="color:#00f;">已完成</strong>';  
             } else {
               return '状态 : <strong>未开始</strong>';  
