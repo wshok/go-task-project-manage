@@ -538,6 +538,144 @@ func DocDelete(c *gin.Context) {
 	}
 }
 
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@pro
+//
+
+func ProList(c *gin.Context) {
+	if helper.IsAjax(c) {
+
+		c.JSON(200, gin.H{
+			"code":  1,
+			"msg":   "",
+			"count": 10,
+			"data":  module.ProList(),
+		})
+
+	} else {
+
+		c.HTML(200, "pro/index.html", gin.H{
+			"controller": "pro",
+			"action":     "index",
+		})
+	}
+}
+
+func ProAdd(c *gin.Context) {
+
+	if helper.IsAjax(c) {
+
+		var pro module.Project
+
+		up_date := strings.Split(c.PostForm("up_date"), " ~ ")
+
+		startTime, _ := time.Parse("2006-01-02", up_date[0])
+		pro.StartTime = startTime.Unix()
+
+		endTime, _ := time.Parse("2006-01-02", up_date[1])
+		pro.EndTime = endTime.Unix()
+
+		if err := c.ShouldBind(&pro); err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+
+		if module.ProAdd(pro) {
+			c.JSON(200, gin.H{
+				"code": 1,
+				"msg":  "添加成功",
+				"data": "",
+			})
+		} else {
+			c.JSON(200, gin.H{
+				"code": 0,
+				"msg":  "添加失败",
+				"data": "",
+			})
+		}
+	} else {
+
+		c.HTML(200, "pro/add.html", gin.H{
+			"controller": "pro",
+			"action":     "add",
+		})
+	}
+}
+
+func ProEdit(c *gin.Context) {
+	var id = c.Query("id")
+
+	if helper.IsAjax(c) {
+		var pro module.Project
+
+		up_date := strings.Split(c.PostForm("up_date"), " ~ ")
+
+		startTime, _ := time.Parse("2006-01-02", up_date[0])
+		pro.StartTime = startTime.Unix()
+
+		endTime, _ := time.Parse("2006-01-02", up_date[1])
+		pro.EndTime = endTime.Unix()
+
+		if err := c.ShouldBind(&pro); err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+
+		switch module.ProEdit(id, pro) {
+		case -1:
+			c.JSON(200, gin.H{
+				"code": 0,
+				"msg":  "记录不存在",
+				"data": "",
+			})
+		case 0:
+			c.JSON(200, gin.H{
+				"code": 0,
+				"msg":  "修改失败",
+				"data": "",
+			})
+		case 1:
+			c.JSON(200, gin.H{
+				"code": 1,
+				"msg":  "修改成功",
+				"data": "",
+			})
+		}
+
+	} else {
+
+		c.HTML(200, "pro/edit.html", gin.H{
+			"controller": "pro",
+			"action":     "edit",
+			"data":       module.ProInfo(id),
+		})
+	}
+}
+
+
+func ProDelete(c *gin.Context) {
+	var id = c.Query("id")
+
+	if module.ProDelete(id) {
+
+		c.JSON(200, gin.H{
+			"code": 1,
+			"msg":  "删除成功",
+			"data": "",
+		})
+
+	} else {
+
+		c.JSON(200, gin.H{
+			"code": 0,
+			"msg":  "删除失败",
+			"data": "",
+		})
+	}
+}
+
+
+
 // func Index(c *gin.Context) {
 
 // 	curPage, _ := strconv.Atoi(c.Param("p"))

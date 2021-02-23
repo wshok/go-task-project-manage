@@ -47,7 +47,7 @@ func main() {
 	g := gin.New()
 
 	g.Use(gin.Recovery())
-	g.Use(auth())
+	// g.Use(auth())
 
 	g.SetFuncMap(helperFuncs)
 
@@ -103,7 +103,7 @@ func main() {
 
 		task.GET("/card", controller.CardList)
 
-		task.GET("/calendar", controller.Calendar) // todo
+		task.GET("/calendar", controller.Calendar)
 	}
 
 	doc := g.Group("/doc")
@@ -117,6 +117,17 @@ func main() {
 		doc.POST("/delete", controller.DocDelete)
 
 		doc.GET("/view/:id", controller.DocView)
+	}
+
+	pro := g.Group("/project")
+	{
+		pro.GET("/index", controller.ProList)
+
+		pro.Any("/add", controller.ProAdd)
+
+		pro.Any("/edit", controller.ProEdit)
+
+		pro.POST("/delete", controller.ProDelete)
 	}
 
 	g.Run(":8090")

@@ -66,6 +66,18 @@ type Task struct {
 	DeletedAt *time.Time `json:"delete_at,omitempty"`
 }
 
+type Project struct {
+	Id        uint `form:"id" json:"id,omitempty" gorm:"primary_key,AUTO_INCREMENT"`
+	Title      string    `form:"title" json:"title,omitempty" binding:"required"`
+	Remark     string `form:"remark" json:"remark" gorm:"type:varchar(128);not null;default:''"`
+	Status     string    `form:"status" json:"status,omitempty" gorm:"type:varchar(16);not null;default:'todo'"`
+	StartTime  int64 `json:"start_time,omitempty" binding:"required"`
+	EndTime    int64 `json:"end_time,omitempty" binding:"required"`
+	CreatedAt time.Time `json:"create_at,omitempty"`
+	UpdatedAt time.Time `json:"update_at,omitempty"`
+	DeletedAt *time.Time `json:"delete_at,omitempty"`
+}
+
 var (
 	db  *gorm.DB
 	dsn string = "data/j8rtiEF10ysQY.db"
@@ -86,10 +98,10 @@ func opendb() (*gorm.DB, error) {
 		return nil, err
 	}
 
-	db.SingularTable(true) // 禁用表名复数
+	db.SingularTable(true)
 
-	// db.DropTable(&User{})//, &Doc{}, &Task{})
-	// db.AutoMigrate(&User{})//, &Doc{}, &Task{})
+	// db.DropTable(&Project{})//, &Doc{}, &Task{})
+	// db.AutoMigrate(&Project{})
 
 	// defer db.Close()
 
@@ -334,6 +346,73 @@ func DocDelete(id string) bool {
 	}
 
 	db.Delete(&doc)
+
+	if db.RowsAffected > 0 || db.Error == nil {
+		return true
+	}
+
+	return false
+}
+
+
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@pro
+//
+
+func ProList() []Project {
+
+	var result []Project
+
+	// db.Table("hd_project").Order("id desc").Find(&result)
+
+	db.Model(&Project{}).Order("id desc").Scan(&result)
+
+	return result
+}
+
+func ProAdd(data Project) bool {
+
+	db.Create(&data)
+
+	if db.RowsAffected > 0 || db.Error == nil {
+		return true
+	}
+
+	return false
+}
+
+func ProEdit(id string, data Project) int {
+	var pro Project
+	db.First(&pro, id)
+	if pro == (Project{}) {
+		return -1
+	}
+
+	db.Model(&Project{}).Where("id = ?", id).Updates(data)
+
+	if db.RowsAffected > 0 || db.Error == nil {
+		return 1
+	}
+
+	return 0
+}
+
+func ProInfo(id string) Project {
+	var pro Project
+	db.First(&pro, id)
+
+	return pro
+}
+
+func ProDelete(id string) bool {
+	var pro Project
+	db.First(&pro, id)
+
+	if pro == (Project{}) {
+		return false
+	}
+
+	db.Delete(&pro)
 
 	if db.RowsAffected > 0 || db.Error == nil {
 		return true
