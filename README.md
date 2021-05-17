@@ -1,3 +1,3 @@
 # go-easyadmin
 
-go task manage system
+golang task/project manage system base gin-gonic
