@@ -28,12 +28,12 @@ func auth() gin.HandlerFunc {
 		cookie, err := c.Cookie("_token_")
 
         if err == nil {
-        	uid,_ := helper.Decrypt([]byte(cookie))
-        	if len(uid) < 1 {
-        		c.Redirect(http.StatusFound, "/login")
-        	}
+            uid,_ := helper.Decrypt([]byte(cookie))
+			if len(uid) < 1 {
+				c.Redirect(http.StatusFound, "/login")
+			}
         } else {
-        	c.Redirect(http.StatusFound, "/login")
+			c.Redirect(http.StatusFound, "/login")
         }
 
 		c.Next()
@@ -136,7 +136,7 @@ func main() {
 // built-in: role:: administrator/projector/employee/master.
 // department?/doc-category/task-type :: direct save chineses-name, can add.
 // task-status: todo/doing/done
-// project:  can add
+
 
 var helperFuncs = template.FuncMap{
 	"jsExists": func(fpath string) bool {

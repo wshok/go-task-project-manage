@@ -13,6 +13,10 @@ import (
 )
 
 
+func Index(c *gin.Context) {
+	//
+}
+
 func Login(c *gin.Context) {
 	
 	if helper.IsAjax(c) {

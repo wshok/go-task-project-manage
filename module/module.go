@@ -108,6 +108,10 @@ func opendb() (*gorm.DB, error) {
 	return db, err
 }
 
+func Index() interface{} {
+	return nil
+}
+
 //
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@user
 //
