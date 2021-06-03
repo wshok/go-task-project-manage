@@ -1,3 +1,8 @@
-## golang 项目任务管理系统
+### golang 项目任务管理系统
 
-golang task/project manage system base gin-gonic
+###功能说明
+1.golang 实现，基于gin-gonic框架。
+2.包含人员、项目等管理。
+3.看板形式管理任务，可拖拽修改任务状态。
+4.包含日历视图
+
