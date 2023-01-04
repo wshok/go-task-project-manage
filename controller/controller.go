@@ -2,11 +2,17 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/dgrijalva/jwt-go"
 
 	"app/helper"
 	"app/module"
+
+    "app/middleware/auth"
+
 	// "html/template"
 	// "fmt"
+	// "log"
+	"net/http"
 	"strings"
 	"time"
 	"strconv"
@@ -41,14 +47,23 @@ func Login(c *gin.Context) {
 				"data": "",
 			})
 		} else {
-			var host =c.GetHeader("Host")
-			uid,_ := helper.Encrypt([]byte(strconv.FormatUint(uint64(user.Id), 10)))
-			c.SetCookie("_token_", string(uid), 0, "/", host, false, true)
+			// var host =c.GetHeader("Host")
+			// uid,_ := helper.Encrypt([]byte(strconv.FormatUint(uint64(user.Id), 10)))
+			// c.SetCookie("_token_", string(uid), 0, "/", host, false, true)
+			token,err := generateToken(user)
+			if err != nil {
+				c.JSON(http.StatusOK, gin.H{
+					"code": 1,
+					"msg": err.Error(),
+					"data": "",
+				})
+				return
+			}
 
 			c.JSON(200, gin.H{
 				"code": 1,
 				"msg":  "成功",
-				"data": "",
+				"data": gin.H{"token": token},
 			})
 		}
 	} else {
@@ -60,6 +75,51 @@ func Login(c *gin.Context) {
 			"captcha": 0,
 		})
 	}
+}
+
+
+func generateToken(user module.User) (string, error) {
+	// j := &auth.JWT{
+	// 	[]byte("newtrekWang"),
+	// }
+	j := auth.NewJWT()
+	claims := auth.CustomClaims{
+		strconv.Itoa(int(user.Id)),
+		user.Username,
+		user.Phone,
+		jwt.StandardClaims{
+			NotBefore: int64(time.Now().Unix() - 1000), // 签名生效时间
+			ExpiresAt: int64(time.Now().Unix() + 3600), // 过期时间 一小时
+			Issuer:    "newtrekWang",                   //签名的发行者
+		},
+	}
+
+	token, err := j.CreateToken(claims)
+
+	// log.Println(token)
+
+	return token, err
+
+	// if err != nil {
+	// 	c.JSON(http.StatusOK, gin.H{
+	// 		"status": -1,
+	// 		"msg":    err.Error(),
+	// 	})
+	// 	return
+	// }
+
+	
+
+	// data := LoginResult{
+	// 	User:  user,
+	// 	Token: token,
+	// }
+	// c.JSON(http.StatusOK, gin.H{
+	// 	"status": 0,
+	// 	"msg":    "登录成功！",
+	// 	"data":   data,
+	// })
+	// return
 }
 
 //

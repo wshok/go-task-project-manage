@@ -2,18 +2,21 @@ package main
 
 import (
 	"fmt"
+	// "log"
 	"html/template"
 	"regexp"
 	"net/http"
 	"path/filepath"
+	"strings"
 
 	"app/controller"
 	"app/helper"
+	"app/middleware/auth"
 
 	"github.com/gin-gonic/gin"
 )
 
-func auth() gin.HandlerFunc {
+func authMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		if c.Request.URL.Path == "/login" {
 			return
@@ -25,16 +28,53 @@ func auth() gin.HandlerFunc {
 		}
 
 		// Set example variable
-		cookie, err := c.Cookie("_token_")
+		//cookie, err := c.Cookie("_token_")
 
-        if err == nil {
-            uid,_ := helper.Decrypt([]byte(cookie))
-			if len(uid) < 1 {
-				c.Redirect(http.StatusFound, "/login")
+   //      if err == nil {
+   //          uid,_ := helper.Decrypt([]byte(cookie))
+			// if len(uid) < 1 {
+			// 	c.Redirect(http.StatusFound, "/login")
+			// }
+   //      } else {
+			// c.Redirect(http.StatusFound, "/login")
+   //      }
+
+        authorization := c.Request.Header.Get("Authorization")
+
+        token := strings.Split(string(authorization), " ")
+
+		if (token[1] == "") || (len(token) < 2) {
+			c.JSON(http.StatusOK, gin.H{
+				"status": -1,
+				"msg":    "请求未携带token，无权限访问",
+			})
+			c.Abort()
+			return
+		}
+
+		// log.Print("get token: ", token[1])
+
+		j := auth.NewJWT()
+		// parseToken 解析token包含的信息
+		claims, err := j.ParseToken(token[1])
+		if err != nil {
+			if err == auth.TokenExpired {
+				c.JSON(http.StatusOK, gin.H{
+					"status": -1,
+					"msg":    "授权已过期",
+				})
+				c.Abort()
+				return
 			}
-        } else {
-			c.Redirect(http.StatusFound, "/login")
-        }
+			c.JSON(http.StatusOK, gin.H{
+				"status": -1,
+				"msg":    err.Error(),
+			})
+			c.Abort()
+			return
+		}
+		// 继续交由下一个路由处理,并将解析出的信息传递下去
+		c.Set("claims", claims)
 
 		c.Next()
 	}
@@ -47,7 +87,7 @@ func main() {
 	g := gin.New()
 
 	g.Use(gin.Recovery())
-	// g.Use(auth())
+	g.Use(authMiddleware())
 
 	g.SetFuncMap(helperFuncs)
 
