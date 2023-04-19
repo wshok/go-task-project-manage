@@ -195,9 +195,6 @@ func UserEdit(c *gin.Context) {
 }
 
 func UserModify(c *gin.Context) {
-	// var field = c.PostForm("field")
-	// var value = c.PostForm("value")
-	// var uid = c.PostForm("id")
 
 	type UM struct {
 	    Id uint `form:"id" json:"id"`
@@ -232,35 +229,39 @@ func UserModify(c *gin.Context) {
 }
 
 func UserPassword(c *gin.Context) {
-	var uid = c.Query("id")
-	var password = c.PostForm("password")
-    password = helper.Md5(password)
 
-	if helper.IsAjax(c) {
-		if module.UserModify(1, "password", password) { // todo
+    type UP struct {
+	    Id uint `form:"id" json:"id"`
+	    Password string `form:"password" json:"password"`
+	}
 
-			c.JSON(200, gin.H{
-				"code": 1,
-				"msg":  "修改成功",
-				"data": "",
-			})
+	var up UP
 
-		} else {
+	if err := c.ShouldBind(&up); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
 
-			c.JSON(200, gin.H{
-				"code": 0,
-				"msg":  "修改失败",
-				"data": "",
-			})
-		}
+	password := helper.Md5(up.Password)
+
+
+	if module.UserModify(up.Id, "password", password) { // todo
+
+		c.JSON(200, gin.H{
+			"code": 1,
+			"msg":  "修改成功",
+			"data": "",
+		})
+
 	} else {
 
-		c.HTML(200, "user/password.html", gin.H{
-			"controller": "user",
-			"action":     "edit",
-			"data":       module.UserInfo(uid),
+		c.JSON(200, gin.H{
+			"code": 0,
+			"msg":  "修改失败",
+			"data": "",
 		})
 	}
+
 }
 
 func UserDelete(c *gin.Context) {

@@ -139,6 +139,7 @@ func UserAdd(data User) bool {
 func UserEdit(uid uint, data User) int {
 	var user User
 	db.First(&user, uid)
+
 	if user == (User{}) {
 		return -1
 	}
