@@ -34,11 +34,9 @@ func Login(c *gin.Context) {
 			return
 		}
 
-		var username = c.PostForm("username")
-		var password = c.PostForm("password")
-		password = helper.Md5(password)
+		password := helper.Md5(user.Password)
 
-		user = module.UserInfoByName(username)
+		user = module.UserInfoByName(user.Username)
 
 		if user == (module.User{}) || password != user.Password {
 			c.JSON(200, gin.H{
@@ -165,7 +163,7 @@ func UserEdit(c *gin.Context) {
 			return
 		}
 
-		switch module.UserEdit(uid, user) {
+		switch module.UserEdit(user.Id, user) {
 		case -1:
 			c.JSON(200, gin.H{
 				"code": 0,
@@ -197,11 +195,25 @@ func UserEdit(c *gin.Context) {
 }
 
 func UserModify(c *gin.Context) {
-	var field = c.PostForm("field")
-	var value = c.PostForm("value")
-	var uid = c.PostForm("id")
+	// var field = c.PostForm("field")
+	// var value = c.PostForm("value")
+	// var uid = c.PostForm("id")
 
-	if module.UserModify(uid, field, value) {
+	type UM struct {
+	    Id uint `form:"id" json:"id"`
+	    Field string `form:"field" json:"field"`
+	    Value interface{} `form:"value" json:"value"`
+	}
+
+	var um UM
+
+	if err := c.ShouldBind(&um); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+
+	if module.UserModify(um.Id, um.Field, um.Value) {
 
 		c.JSON(200, gin.H{
 			"code": 1,
@@ -225,7 +237,7 @@ func UserPassword(c *gin.Context) {
     password = helper.Md5(password)
 
 	if helper.IsAjax(c) {
-		if module.UserModify(uid, "password", password) {
+		if module.UserModify(1, "password", password) { // todo
 
 			c.JSON(200, gin.H{
 				"code": 1,

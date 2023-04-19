@@ -19,7 +19,7 @@ type Page struct {
 
 
 type User struct {
-	Id        uint `json:"id" gorm:"primary_key,AUTO_INCREMENT"`
+	Id         uint `json:"id" gorm:"primary_key,AUTO_INCREMENT"`
 	Username   string `form:"username" json:"username" binding:"required" gorm:"type:varchar(32);not null;default:''"`
 	Realname   string `form:"realname" json:"realname" gorm:"type:varchar(32);not null;default:''"`
 	Password   string `form:"password" json:"password" gorm:"type:varchar(32);not null;default:''"`
@@ -136,7 +136,7 @@ func UserAdd(data User) bool {
 	return false
 }
 
-func UserEdit(uid string, data User) int {
+func UserEdit(uid uint, data User) int {
 	var user User
 	db.First(&user, uid)
 	if user == (User{}) {
@@ -167,7 +167,7 @@ func UserInfoByName(username string) User {
 	return user
 }
 
-func UserModify(uid, field, value string) bool {
+func UserModify(uid uint, field string, value interface{}) bool {
 	var user User
 	db.First(&user, uid)
 

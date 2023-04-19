@@ -43,7 +43,7 @@ func authMiddleware() gin.HandlerFunc {
 
         token := strings.Split(string(authorization), " ")
 
-		if (token[1] == "") || (len(token) < 2) {
+		if (len(token) < 2) || (token[1] == "") {
 			c.JSON(http.StatusOK, gin.H{
 				"status": -1,
 				"msg":    "请求未携带token，无权限访问",
