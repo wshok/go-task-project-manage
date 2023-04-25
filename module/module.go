@@ -185,15 +185,16 @@ func UserModify(uid uint, field string, value interface{}) bool {
 	return false
 }
 
-func UserDelete(uid string) bool {
-	var user User
-	db.First(&user, uid)
+func UserDelete(uid []int) bool {
+	var users []User
 
-	if user == (User{}) {
+	db.Model(&User{}).Find(&users, uid)
+
+	if len(users) == 0 {
 		return false
 	}
 
-	db.Delete(&user)
+	db.Delete(&users, uid)
 
 	if db.RowsAffected > 0 || db.Error == nil {
 		return true

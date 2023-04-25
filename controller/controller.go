@@ -245,7 +245,7 @@ func UserPassword(c *gin.Context) {
 	password := helper.Md5(up.Password)
 
 
-	if module.UserModify(up.Id, "password", password) { // todo
+	if module.UserModify(up.Id, "password", password) {
 
 		c.JSON(200, gin.H{
 			"code": 1,
@@ -265,9 +265,18 @@ func UserPassword(c *gin.Context) {
 }
 
 func UserDelete(c *gin.Context) {
-	var uid = c.Query("id")
+	type UD struct {
+	    Id []int `form:"id" json:"id"`
+	}
 
-	if module.UserDelete(uid) {
+	var ud UD
+
+	if err := c.ShouldBind(&ud); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	if module.UserDelete(ud.Id) {
 
 		c.JSON(200, gin.H{
 			"code": 1,
